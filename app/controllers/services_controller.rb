@@ -1,5 +1,5 @@
 class ServicesController < ApplicationController
-  before_filter :authenticate_user!, :except => [:create, :signin, :signup, :newaccount, :failure]
+  before_filter :authenticate_user!, :except => [:create, :signup, :newaccount, :failure]
   protect_from_forgery :except => :create
 
   # GET all authentication services assigned to the current user
@@ -19,6 +19,13 @@ class ServicesController < ApplicationController
     end
 
     redirect_to services_path
+  end
+
+  def signup
+    @authhash = session[:authhash]
+    if @authhash.nil?
+     redirect_to root_url
+    end
   end
 
   # POST from signup view

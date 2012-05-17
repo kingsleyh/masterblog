@@ -52,9 +52,10 @@ Masterthought::Application.routes.draw do
   match '/auth/:service/callback' => 'services#create'
   match '/auth/failure' => 'services#failure'
 
+   match "/admin" => "admin#index", :as => :admin_signin
+
   resources :services, :only => [:index, :create, :destroy] do
     collection do
-      get 'signin'
       get 'signout'
       get 'signup'
       post 'newaccount'
