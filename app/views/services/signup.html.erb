@@ -1,0 +1,19 @@
+<section id="services_new" class="services">
+    <h1>New account</h1>
+
+    <div>
+        <h3>Please confirm you login details</h3>
+
+        <p class="small">
+            Provider: <%= @authhash[:provider] %><br />
+            ID: <%= @authhash[:uid] %><br />
+            Name: <%= @authhash[:name] %><br />
+            Email: <%= @authhash[:email] %> <br />
+        </p>
+
+        <%= form_tag :controller => "services", :action => "newaccount" do %>
+            <%= submit_tag "Confirm and create new account" %> <%= submit_tag "Cancel" %>
+        <% end %>
+    </div>
+
+</section>
