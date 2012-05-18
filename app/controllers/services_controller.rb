@@ -24,7 +24,7 @@ class ServicesController < ApplicationController
   def signup
     @authhash = session[:authhash]
     if @authhash.nil?
-     redirect_to root_url
+      redirect_to root_url
     end
   end
 
@@ -34,7 +34,7 @@ class ServicesController < ApplicationController
       session[:authhash] = nil
       session.delete :authhash
       redirect_to root_url
-    else  # create account
+    else # create account
       @newuser = User.new
       @newuser.name = session[:authhash][:name]
       @newuser.email = session[:authhash][:email]
@@ -86,9 +86,9 @@ class ServicesController < ApplicationController
       @authhash = Hash.new
 
       if service_route == 'facebook'
-        omniauth['extra']['raw_info']['email'] ? @authhash[:email] =  omniauth['extra']['raw_info']['email'] : @authhash[:email] = ''
-        omniauth['extra']['raw_info']['name'] ? @authhash[:name] =  omniauth['extra']['raw_info']['name'] : @authhash[:name] = ''
-        omniauth['extra']['raw_info']['id'] ?  @authhash[:uid] =  omniauth['extra']['raw_info']['id'].to_s : @authhash[:uid] = ''
+        omniauth['extra']['raw_info']['email'] ? @authhash[:email] = omniauth['extra']['raw_info']['email'] : @authhash[:email] = ''
+        omniauth['extra']['raw_info']['name'] ? @authhash[:name] = omniauth['extra']['raw_info']['name'] : @authhash[:name] = ''
+        omniauth['extra']['raw_info']['id'] ? @authhash[:uid] = omniauth['extra']['raw_info']['id'].to_s : @authhash[:uid] = ''
         omniauth['provider'] ? @authhash[:provider] = omniauth['provider'] : @authhash[:provider] = ''
       end
 
@@ -111,22 +111,27 @@ class ServicesController < ApplicationController
             session[:user_id] = auth.user.id
             session[:service_id] = auth.id
 
-            flash[:notice] = 'Signed in successfully via ' + @authhash[:provider].capitalize + '.'
+            flash[:notice] = 'Signed in successfully via ' + @authhash[:provider].to_s.capitalize + '.'
             redirect_to root_url
           else
-            # this is a new user; show signup; @authhash is available to the view and stored in the sesssion for creation of a new user
-            session[:authhash] = @authhash
-            render signup_services_path
+            if User.all.empty?
+              # this is a new user; show signup; @authhash is available to the view and stored in the sesssion for creation of a new user
+              session[:authhash] = @authhash
+              render signup_services_path
+            else
+              redirect_to root_url
+            end
           end
         end
       else
-        flash[:error] =  'Error while authenticating via ' + service_route + '/' + @authhash[:provider].capitalize + '. The service returned invalid data for the user id.'
+        flash[:error] = 'Error while authenticating via ' + service_route + '/' + @authhash[:provider].capitalize + '. The service returned invalid data for the user id.'
         redirect_to admin_signin_path
       end
     else
       flash[:error] = 'Error while authenticating via ' + service_route.capitalize + '. The service did not return valid data.'
       redirect_to admin_signin_path
     end
+
   end
 
   # callback: failure

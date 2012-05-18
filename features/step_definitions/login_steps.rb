@@ -2,7 +2,7 @@ Given /^no users exist$/ do
 
 end
 
-When /^I login$/ do
+When /^I try to login$/ do
  visit('/admin')
  find_link('Facebook').visible?
  click_link('Facebook')
@@ -26,4 +26,18 @@ end
 
 Then /^I should be logged in$/ do
   find("#nav_user").find("ul").find("span").has_content?("foobar@example.com")
+end
+
+
+Given /^a user already exists$/ do
+  User.create(:name => 'test_user', :email => "test@example.com")
+end
+
+Then /^I should be redirected to the home page$/ do
+  find('#home_page').has_content?("Home Page")
+end
+
+Given /^I already have an account$/ do
+  user = User.create(:name => 'foo', :email => "foobar@example.com")
+  user.services << Service.create(:provider => 'facebook',:uid => '123', :uname => 'foo', :uemail => 'foobar@example.com')
 end
