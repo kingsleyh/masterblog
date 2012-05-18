@@ -46,7 +46,6 @@ Masterthought::Application.routes.draw do
   #     resources :products
   #   end
 
-   match "/signin" => "services#signin"
   match "/signout" => "services#signout"
 
   match '/auth/:service/callback' => 'services#create'

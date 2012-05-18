@@ -121,11 +121,11 @@ class ServicesController < ApplicationController
         end
       else
         flash[:error] =  'Error while authenticating via ' + service_route + '/' + @authhash[:provider].capitalize + '. The service returned invalid data for the user id.'
-        redirect_to signin_path
+        redirect_to admin_signin_path
       end
     else
       flash[:error] = 'Error while authenticating via ' + service_route.capitalize + '. The service did not return valid data.'
-      redirect_to signin_path
+      redirect_to admin_signin_path
     end
   end
 

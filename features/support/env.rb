@@ -57,3 +57,16 @@ end
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
 Cucumber::Rails::Database.javascript_strategy = :truncation
 
+OmniAuth.config.test_mode = true
+OmniAuth.config.mock_auth[:facebook] = {
+    "provider" => :facebook,
+    "extra" => {
+      "raw_info" => {
+    "email" => "foobar@example.com",
+    "name" => "foo",
+    "id" => "123"
+  }
+  }
+}
+
+

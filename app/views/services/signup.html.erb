@@ -5,10 +5,10 @@
         <h3>Please confirm you login details</h3>
 
         <p class="small">
-            Provider: <%= @authhash[:provider] %><br />
-            ID: <%= @authhash[:uid] %><br />
-            Name: <%= @authhash[:name] %><br />
-            Email: <%= @authhash[:email] %> <br />
+            Provider: <span id="account_provider"><%= @authhash[:provider] %></span><br />
+            ID: <span id="account_id"><%= @authhash[:uid] %></span><br />
+            Name: <span id="account_name"><%= @authhash[:name] %></span><br />
+            Email: <span id="account_email"><%= @authhash[:email] %></span> <br />
         </p>
 
         <%= form_tag :controller => "services", :action => "newaccount" do %>

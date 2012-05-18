@@ -23,7 +23,7 @@ end
 gem 'jquery-rails'
 gem 'omniauth'
 gem 'omniauth-facebook'
-gem 'omniauth-twitter'
+gem 'launchy'
 
 group :test do
   gem 'cucumber-rails', :require => false

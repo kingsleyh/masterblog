@@ -6,7 +6,10 @@ Feature: login
   Scenario: instruct creation of new user when no users exist
     Given no users exist
     When I login
-    Then I should be asked to create a new user
+    Then I should be asked to create a new user with the following credentials:
+    |provider|facebook          |
+    |name    |foo               |
+    |email   |foobar@example.com|
 
   Scenario: create first user
     Given no users exist

@@ -35,3 +35,7 @@ Masterthought::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 end
+
+Rails.application.config.middleware.use OmniAuth::Builder do
+  provider :facebook, '230324000414528', 'f6d291162b8c39096b610b7be00d7546'
+end

@@ -65,3 +65,7 @@ Masterthought::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 end
+
+Rails.application.config.middleware.use OmniAuth::Builder do
+  provider :facebook, '230324000414528', 'f6d291162b8c39096b610b7be00d7546'
+end
