@@ -1,0 +1,98 @@
+<div class="box grid_8">
+  <div class="box-head"><h2>Create New Article</h2></div>
+  <div class="box-content">
+    <%= form_for @article, :as => :article, :url => admin_create_article_url, :html => {:class => 'block-content form'} do |f| %>
+        <div class="form-row">
+          <p class="form-label">Title:</p>
+
+          <div class="form-item"><%= f.text_field :title %></div>
+        </div>
+
+        <div class="form-row">
+          <p class="form-label">Excerpt: <%= link_to "toggle", "#", :id => "excerpt_link" %></p>
+
+          <div class="form-item"><%= f.text_area :excerpt, :style => "display:none;" %></div>
+        </div>
+
+        <div class="form-row">
+          <p class="form-label">Content:</p>
+
+          <div class="form-item"><%= f.text_area :content %></div>
+        </div>
+        <div class="form-row">
+          <p class="form-label">Tags:</p>
+
+          <div class="form-item"><%= f.text_field :tags %></div>
+        </div>
+        <%= f.hidden_field(:user_id, :value => current_user.id) %>
+        <div style="float:right;">
+          <input type="submit" class="button yellow" value="Create Article">
+        </div>
+
+        <div>
+          <% @article.errors.full_messages.each do |msg| %>
+              <p><%= msg %></p>
+          <% end %>
+
+        </div>
+    <% end %>
+    <div class="clear"></div>
+  </div>
+</div>
+
+<div class="box grid_4">
+  <div class="box-head"><h2>Assets</h2></div>
+  <div class="box-content">
+    <div class="form-row">
+      <label class="form-label">Select Dropdown</label>
+
+      <div class="form-item">
+        <select>
+          <option value='option1'>Option 1</option>
+          <option value='option2'>Option 2</option>
+          <option value='option3'>Option 3</option>
+          <option value='option4'>Waldo was here</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label class="form-label">Datepicker</label>
+
+      <div class="form-item">
+        <input type="text" id="datepicker"/>
+        <span class="form-icon fugue-2 calendar-day"></span>
+      </div>
+    </div>
+    <div class="form-row">
+      <label class="form-label">Color Picker</label>
+
+      <div class="form-item">
+        <input type="text" id="colorpicker"/>
+        <span class="form-icon fugue-2 color"></span>
+      </div>
+    </div>
+    <div class="form-row">
+      <label class="form-label">File Upload</label>
+
+      <div class="form-item file-upload">
+        <input/>
+        <input class="filebase" type="file"/>
+        <span class="form-icon fugue-2 control-eject"></span>
+      </div>
+    </div>
+    <div class="form-row">
+      <label class="form-label">Radio Buttons</label>
+      <input name='rgroup' type='radio' value='radio1'/>
+      <input checked='checked' name='rgroup' type='radio' value='radio2'/>
+      <input disabled='disabled' name='rgroup' type='radio' value='radio3'/>
+    </div>
+    <div class="form-row">
+      <label class="form-label">Checkboxes</label>
+      <input type='checkbox' value='check1'/>
+      <input checked='checked' type='checkbox' value='check2'/>
+      <input disabled='disabled' type='checkbox' value='check3'/>
+    </div>
+  </div>
+  <div class="clear"></div>
+</div>
+

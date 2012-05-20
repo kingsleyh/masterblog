@@ -6,4 +6,7 @@ Feature: Make a new blog post
   Scenario: Make a new blog post
     Given I have logged in
     When I make a new blog post
-    Then the post is viewable
+    Then the article is created
+    And listed on the admin articles page:
+    |title|A Great Article|
+    |name |foo|

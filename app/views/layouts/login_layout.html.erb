@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Masterthought</title>
+  <%= stylesheet_link_tag :master, :login, :ad, 'iphone-check' %>
+  <%= javascript_include_tag :defaults, 'jquery-1.7.1.min', 'global' %>
+  <%= csrf_meta_tag %>
+  <link rel="shortcut icon" href="favicon.gif">
+
+  <!---jQuery Files-->
+  <!--<script src="js/jquery-1.7.1.min.js"></script>-->
+  <!--<script src="js/jquery.spinner.js"></script>-->
+  <!--<script type="text/javascript" src="js/forms/jquery.validate.min.js"></script>-->
+  <!---Fonts-->
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+  <!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <!---FadeIn Effect, Validation and Spinner-->
+  <script>
+      $(document).ready(function () {
+          $('div.wrapper').hide();
+          $('div.wrapper').fadeIn(1200);
+      });
+  </script>
+</head>
+<body>
+<div class="wrapper">
+  <div class="logo">
+    <h1>LOGIN PAGE</h1>
+  </div>
+  <div class="lg-body">
+    <div class="inner">
+      <div id="lg-head">
+        <p><span class="font-bold">MasterBlog</span>: Please login to access the admin panel.</p>
+
+        <div class="separator"></div>
+      </div>
+      <div style="text-align:center;" class="login">
+        <%= link_to image_tag("facebook_128.png"), "/auth/facebook", :class => "facebook_login" %>
+      </div>
+      <div style="text-align:center;"><%= link_to "login with facebook", "/auth/facebook", :style => "color:#d3d3d3;", :class => "facebook_login" %></div>
+    </div>
+  </div>
+  <div style="margin-top:10px;">
+  <% flash.each do |key, value| %>
+      <div class="ad-notif-<%= key %>"><p><%= value %></p></div>
+  <% end %>
+  </div>
+</div>
+</body>
+</html>

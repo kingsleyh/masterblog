@@ -20,7 +20,7 @@ Feature: login
   Scenario: when a user already exists prevent anonymous user creation
     Given a user already exists
     When I try to login
-    Then I should be redirected to the home page
+    Then I should be redirected to the login page
 
   Scenario: login with existing account
     Given I already have an account

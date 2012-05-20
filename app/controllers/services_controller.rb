@@ -13,7 +13,7 @@ class ServicesController < ApplicationController
     @service = current_user.services.find(params[:id])
 
     if session[:service_id] == @service.id
-      flash[:error] = 'You are currently signed in with this account!'
+      flash[:info] = 'You are currently signed in with this account!'
     else
       @service.destroy
     end
@@ -46,11 +46,11 @@ class ServicesController < ApplicationController
         session[:user_id] = @newuser.id
         session[:service_id] = @newuser.services.first.id
 
-        flash[:notice] = 'Your account has been created and you have been signed in!'
-        redirect_to root_url
+        flash[:success] = 'Your account has been created and you have been signed in!'
+        redirect_to admin_index_path
       else
         flash[:error] = 'This is embarrassing! There was an error while creating your account from which we were not able to recover.'
-        redirect_to root_url
+        redirect_to admin_signin_path
       end
     end
   end
@@ -62,9 +62,9 @@ class ServicesController < ApplicationController
       session[:service_id] = nil
       session.delete :user_id
       session.delete :service_id
-      flash[:notice] = 'You have been signed out!'
+      flash[:success] = 'You have been signed out!'
     end
-    redirect_to root_url
+    redirect_to admin_signin_path
   end
 
   # callback: success
@@ -97,12 +97,12 @@ class ServicesController < ApplicationController
 
         if user_signed_in?
           if auth
-            flash[:notice] = 'Your account at ' + @authhash[:provider].capitalize + ' is already connected with this site.'
-            redirect_to services_path
+            #flash[:info] = 'You are already logged in via ' + @authhash[:provider].capitalize
+            redirect_to admin_index_path
           else
             current_user.services.create!(:provider => @authhash[:provider], :uid => @authhash[:uid], :uname => @authhash[:name], :uemail => @authhash[:email])
-            flash[:notice] = 'Your ' + @authhash[:provider].capitalize + ' account has been added for signing in at this site.'
-            redirect_to services_path
+            flash[:success] = 'Your ' + @authhash[:provider].capitalize + ' account has been added for signing in at this site.'
+            redirect_to admin_index_path
           end
         else
           if auth
@@ -111,15 +111,15 @@ class ServicesController < ApplicationController
             session[:user_id] = auth.user.id
             session[:service_id] = auth.id
 
-            flash[:notice] = 'Signed in successfully via ' + @authhash[:provider].to_s.capitalize + '.'
-            redirect_to root_url
+            flash[:success] = 'Signed in successfully via ' + @authhash[:provider].to_s.capitalize + '.'
+            redirect_to admin_index_path
           else
             if User.all.empty?
               # this is a new user; show signup; @authhash is available to the view and stored in the sesssion for creation of a new user
               session[:authhash] = @authhash
               render signup_services_path
             else
-              redirect_to root_url
+              redirect_to admin_signin_path
             end
           end
         end
@@ -131,6 +131,10 @@ class ServicesController < ApplicationController
       flash[:error] = 'Error while authenticating via ' + service_route.capitalize + '. The service did not return valid data.'
       redirect_to admin_signin_path
     end
+
+  end
+
+  def login_existing_user
 
   end
 

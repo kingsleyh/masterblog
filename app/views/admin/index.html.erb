@@ -1,8 +1,35 @@
-<h1>Login to blog Admin</h1>
+     
+     <div class="grid_3" style="padding-bottom:20px;">
+        <%= link_to "New Article", admin_new_article_path, :class => "button orange", :style=>"color:black;", :id=>"new_article"%>
+        <%= link_to "New Section", '#', :class => "button blue", :style=>"color:black;"%>
+        <%= link_to "Upload Asset", '#', :class => "button purple", :style=>"color:black;"%>
+     </div>
 
-<div>
-  <ul>
-    <span>Sign in with:</span>
-    <li><%= link_to "Facebook", "/auth/facebook" %></li>
-  </ul>
-</div>
+     <div class="box grid_12">
+       <div class="box-head"><h2>Articles</h2></div>
+       <div class="box-content no-pad">
+       <table class="display" id="example">
+       <thead>
+         <tr>
+           <th>Article</th>
+           <th>Tags</th>
+           <th>Comments</th>
+           <th>Published</th>
+           <th>Author</th>
+         </tr>
+       </thead>
+       <tbody>
+       <%  @articles.each_with_index do |article,i| %>
+         <tr class="<%= (i%2 == 0) ? "even" : "odd"%>">
+           <td><span id="<%=i%>_title"><%= article.title %></span></td>
+           <td><span id="<%=i%>_tags"><%=  article.tags %></span></td>
+           <td><span id="<%=i%>_comments">none</span></td>
+           <td><span id="<%=i%>_time"><%= article.created_at.strftime("%x") %></span></td>
+           <td><span id="<%=i%>_name"><%=  article.user.name%></span></td>
+         </tr>
+         <% end %>  
+       </tbody>
+     </table>
+       </div>
+     </div>
+
