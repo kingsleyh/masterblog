@@ -3,10 +3,12 @@ class Admin::ArticlesController < ApplicationController
   layout 'admin_layout'
 
   def new
+    @uploads = Upload.all
    @article = Article.new
   end
 
   def create
+    @uploads = Upload.all
     @article = Article.new(params[:article])
     if @article.save
       redirect_to admin_index_path
@@ -16,6 +18,7 @@ class Admin::ArticlesController < ApplicationController
   end
 
   def update
+    @uploads = Upload.all
     @article = Article.find(params[:id])
     if @article.update_attributes(params[:article])
       redirect_to admin_index_path
@@ -25,6 +28,7 @@ class Admin::ArticlesController < ApplicationController
   end
 
   def edit
+    @uploads = Upload.all
     @article = Article.find(params[:id])
   end
 

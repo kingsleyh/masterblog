@@ -2,9 +2,12 @@ $(document).ready(function () {
       
       /* GLOBAL SCRIPTS */
 
+    $(".confirm").easyconfirm();
+
     $("#excerpt_link").click(function() {
-      $("#article_excerpt").fadeToggle("slow", "linear");
+      $("#excerpt-editor").fadeToggle("slow", "linear");
     });
+
 
 
       $('#top-nav li').hover(

@@ -2,6 +2,7 @@
   <div class="box-head"><h2>Create New Article</h2></div>
   <div class="box-content">
     <%= form_for @article, :as => :article, :url => admin_create_article_url, :html => {:class => 'block-content form'} do |f| %>
+
         <div class="form-row">
           <p class="form-label">Title:</p>
 
@@ -11,13 +12,15 @@
         <div class="form-row">
           <p class="form-label">Excerpt: <%= link_to "toggle", "#", :id => "excerpt_link" %></p>
 
-          <div class="form-item"><%= f.text_area :excerpt, :style => "display:none;" %></div>
+          <div id="excerpt-editor" style="display:none;">
+            <div class="form-item"><%= f.text_area :excerpt, :class => "markdown-excerpt" %></div>
+          </div>
         </div>
 
         <div class="form-row">
           <p class="form-label">Content:</p>
 
-          <div class="form-item"><%= f.text_area :content %></div>
+          <div class="form-item"><%= f.text_area :content, :class => "markdown-content" %></div>
         </div>
         <div class="form-row">
           <p class="form-label">Tags:</p>
@@ -29,70 +32,82 @@
           <input type="submit" class="button yellow" value="Create Article">
         </div>
 
-        <div>
-          <% @article.errors.full_messages.each do |msg| %>
-              <p><%= msg %></p>
-          <% end %>
-
-        </div>
     <% end %>
     <div class="clear"></div>
   </div>
 </div>
 
 <div class="box grid_4">
-  <div class="box-head"><h2>Assets</h2></div>
-  <div class="box-content">
-    <div class="form-row">
-      <label class="form-label">Select Dropdown</label>
+  <div class="box-head"><h2>Uploads</h2></div>
+  <div class="box-content no-pad">
+    <table class="display" id="dt3">
+      <thead>
+      <tr>
+        <th>Upload</th>
+        <th>Path</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
 
-      <div class="form-item">
-        <select>
-          <option value='option1'>Option 1</option>
-          <option value='option2'>Option 2</option>
-          <option value='option3'>Option 3</option>
-          <option value='option4'>Waldo was here</option>
-        </select>
-      </div>
-    </div>
-    <div class="form-row">
-      <label class="form-label">Datepicker</label>
+      <script>
+          ZeroClipboard.setMoviePath('/assets/zeroclipboard/ZeroClipboard.swf');
+      </script>
 
-      <div class="form-item">
-        <input type="text" id="datepicker"/>
-        <span class="form-icon fugue-2 calendar-day"></span>
-      </div>
-    </div>
-    <div class="form-row">
-      <label class="form-label">Color Picker</label>
+      <% @uploads.sort_by { |x| x.created_at }.reverse.each_with_index do |upload, i| %>
+          <tr>
+            <td align="center"><%= link_to((image_tag upload.upload.url(:thumb), :style => "border: 1px solid black;"), upload.upload.url(:large), {:id => "upload_#{i}"}) %></td>
+            <td align="center"><%= upload.file_name %></td>
+            <td align="center">
 
-      <div class="form-item">
-        <input type="text" id="colorpicker"/>
-        <span class="form-icon fugue-2 color"></span>
-      </div>
-    </div>
-    <div class="form-row">
-      <label class="form-label">File Upload</label>
+              <div id="d_clip_container_<%= i %>" style="position:relative">
+                <button type="button" id="d_clip_button_<%= i %>" class="button purple">Copy</button>
 
-      <div class="form-item file-upload">
-        <input/>
-        <input class="filebase" type="file"/>
-        <span class="form-icon fugue-2 control-eject"></span>
-      </div>
-    </div>
-    <div class="form-row">
-      <label class="form-label">Radio Buttons</label>
-      <input name='rgroup' type='radio' value='radio1'/>
-      <input checked='checked' name='rgroup' type='radio' value='radio2'/>
-      <input disabled='disabled' name='rgroup' type='radio' value='radio3'/>
-    </div>
-    <div class="form-row">
-      <label class="form-label">Checkboxes</label>
-      <input type='checkbox' value='check1'/>
-      <input checked='checked' type='checkbox' value='check2'/>
-      <input disabled='disabled' type='checkbox' value='check3'/>
-    </div>
+              </div>
+
+              <script>
+                  var clip_<%= i %> = new ZeroClipboard.Client();
+                  clip_<%= i %>.setText('<%= upload.upload.url(:medium).split('?')[0]%>');
+                  clip_<%= i %>.glue('d_clip_button_<%= i %>', 'd_clip_container_<%= i %>');
+              </script>
+
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+
+    <div class="clear"></div>
   </div>
-  <div class="clear"></div>
-</div>
+
+  <div class="grid_8">
+    <% @article.errors.full_messages.each do |msg| %>
+        <div class="ad-notif-error"><p><%= msg %></p></div>
+    <% end %>
+  </div>
+
+  <script>
+      CodeMirror.fromTextArea(document.getElementsByClassName("markdown-excerpt")[0], {
+          mode:'markdown',
+          matchBrackets:true,
+          theme:"eclipse"
+      });
+      CodeMirror.fromTextArea(document.getElementsByClassName("markdown-content")[0], {
+          mode:'markdown',
+          matchBrackets:true,
+          theme:"eclipse"
+      });
+
+
+      $('#dt3').dataTable({
+          "bJQueryUI":true,
+          "sPaginationType":"full_numbers"
+      });
+
+
+      $('#dt3 a').lightBox(); // Select all links in object with gallery ID
+
+
+  </script>
 

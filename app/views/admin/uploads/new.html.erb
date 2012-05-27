@@ -1,0 +1,64 @@
+<div class="box grid_8">
+  <div class="box-head"><h2>Create New Upload</h2></div>
+  <div class="box-content">
+    <%= form_for @upload, :as => :upload, :url => admin_create_upload_url, :html => {:multipart => true, :class => 'block-content form'} do |f| %>
+
+        <div class="form-row">
+          <p class="form-label">Upload:</p>
+
+          <div class="form-item"><%= f.file_field :upload %></div>
+        </div>
+
+
+        <div style="float:right;">
+          <input type="submit" class="button yellow" value="Upload">
+        </div>
+
+    <% end %>
+    <div class="clear"></div>
+  </div>
+</div>
+
+
+<div class="grid_8">
+  <% @upload.errors.full_messages.each do |msg| %>
+      <div class="ad-notif-error"><p><%= msg %></p></div>
+  <% end %>
+</div>
+
+
+<div class="box grid_8">
+  <div class="box-head"><h2>Uploads</h2></div>
+  <div class="box-content no-pad">
+    <table class="display" id="dt3">
+      <thead>
+      <tr>
+        <th>Upload</th>
+        <th>Path</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @uploads.sort_by { |x| x.created_at }.reverse.each do |upload| %>
+          <tr>
+            <td><%= link_to( (image_tag upload.upload.url(:medium), :style => "border: 1px solid black;"),upload.upload.url(:original)) %></td>
+            <td align="center"><%= upload.file_name %></td>
+            <td align="center"><%= link_to image_tag('cross.png'), admin_delete_upload_path(upload.id), :style => "padding-right:20px;", :class => "confirm", :title => "Are you sure you want to delete this Upload?" %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<script>
+    $('#dt3').dataTable({
+        "bJQueryUI":true,
+        "sPaginationType":"full_numbers"
+    });
+</script>
+
+
+

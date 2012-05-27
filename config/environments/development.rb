@@ -39,3 +39,5 @@ end
  Rails.application.config.middleware.use OmniAuth::Builder do
    provider :facebook, '230324000414528', 'f6d291162b8c39096b610b7be00d7546'
  end
+
+Paperclip.options[:command_path] = "/opt/local/bin/"

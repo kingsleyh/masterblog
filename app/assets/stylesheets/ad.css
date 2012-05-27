@@ -388,6 +388,7 @@ input, select {
 	font-size: 10px;
 	color: #292929;
 }
+
 input:disabled {
 	background: #ddd;
 }
@@ -734,3 +735,14 @@ input.filebase {
 		margin-top: 40px;
 	}
 }
+
+/* ERRORS */
+.field_with_errors input {background: #ffe8f7;}
+
+/* IMAGES */
+/*.edit-link {*/
+    /*height: 24px;*/
+    /*width: 24px;*/
+    /*background-image: url(/assets/icons/fugue/24px.png);*/
+    /*background-position: 0 0;*/
+/*}*/

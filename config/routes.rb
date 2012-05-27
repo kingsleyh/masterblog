@@ -57,6 +57,13 @@ Masterthought::Application.routes.draw do
   namespace :admin do
     match "/articles/new" => "articles#new", :as => :new_article
     match "/articles/create" => "articles#create", :as => :create_article
+    match "/articles/edit/:id" => "articles#edit", :as => :edit_article
+    match "/articles/update/:id" => "articles#update", :as => :update_article
+    match "/articles/delete/:id" => "articles#delete", :as => :delete_article
+
+    match "/uploads/new" => "uploads#new", :as => :new_upload
+    match "/uploads/create" => "uploads#create", :as => :create_upload
+    match "/uploads/delete/:id" => "uploads#delete", :as => :delete_upload
   end
 
   resources :services, :only => [:index, :create, :destroy] do
