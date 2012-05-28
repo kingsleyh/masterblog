@@ -1,5 +1,5 @@
 <div class="box grid_8">
-  <div class="box-head"><h2>Edit New Article</h2></div>
+  <div class="box-head"><h2>Edit Article</h2></div>
   <div class="box-content">
     <%= form_for @article, :as => :article, :url => admin_update_article_url, :html => {:class => 'block-content form'} do |f| %>
 
@@ -12,7 +12,9 @@
         <div class="form-row">
           <p class="form-label">Excerpt: <%= link_to "toggle", "#", :id => "excerpt_link" %></p>
 
-          <div id="excerpt-editor" style="display:none;"><div class="form-item"><%= f.text_area :excerpt, :class => "markdown-excerpt" %></div></div>
+          <div id="excerpt-editor" style="display:none;">
+            <div class="form-item"><%= f.text_area :excerpt, :class => "markdown-excerpt" %></div>
+          </div>
         </div>
 
         <div class="form-row">
@@ -24,6 +26,14 @@
           <p class="form-label">Tags:</p>
 
           <div class="form-item"><%= f.text_field :tags %></div>
+        </div>
+        <div class="form-row">
+          <p class="form-label">Section:</p>
+          <% if Section.all.empty? %>
+              <p>Please <%= link_to("Create a Section", admin_new_section_path) %> First</p>
+          <% else %>
+              <div class="form-item"><%= f.select(:section_id, Section.all.collect { |s| [s.name, s.id] }) %></div>
+          <% end %>
         </div>
         <%= f.hidden_field(:user_id, :value => current_user.id) %>
         <div style="float:right;">
@@ -98,15 +108,15 @@
 </div>
 
 <script>
-  CodeMirror.fromTextArea(document.getElementsByClassName("markdown-excerpt")[0], {
-            mode:'markdown',
-            matchBrackets:true,
-            theme:"eclipse"
-        });
-  CodeMirror.fromTextArea(document.getElementsByClassName("markdown-content")[0], {
-            mode:'markdown',
-            matchBrackets:true,
-            theme:"eclipse"
-        });
+    CodeMirror.fromTextArea(document.getElementsByClassName("markdown-excerpt")[0], {
+        mode:'markdown',
+        matchBrackets:true,
+        theme:"eclipse"
+    });
+    CodeMirror.fromTextArea(document.getElementsByClassName("markdown-content")[0], {
+        mode:'markdown',
+        matchBrackets:true,
+        theme:"eclipse"
+    });
 </script>
 

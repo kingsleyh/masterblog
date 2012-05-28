@@ -1,0 +1,57 @@
+<div class="box grid_8">
+  <div class="box-head"><h2>Create New Section</h2></div>
+  <div class="box-content">
+    <%= form_for @section, :as => :section, :url => admin_create_section_url, :html => {:class => 'block-content form'} do |f| %>
+
+        <div class="form-row">
+          <p class="form-label">Name:</p>
+
+          <div class="form-item"><%= f.text_field :name %></div>
+        </div>
+
+        <div style="float:right;">
+          <input type="submit" class="button yellow" value="Create Section">
+        </div>
+
+    <% end %>
+    <div class="clear"></div>
+  </div>
+</div>
+
+<div class="grid_8">
+  <% @section.errors.full_messages.each do |msg| %>
+      <div class="ad-notif-error"><p><%= msg %></p></div>
+  <% end %>
+</div>
+
+
+<div class="box grid_8">
+  <div class="box-head"><h2>Sections</h2></div>
+  <div class="box-content no-pad">
+    <table class="display" id="dt3">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @sections.sort_by { |x| x.created_at }.reverse.each do |section| %>
+          <tr>
+           <td><%=  section.name %></td>
+            <td align="center"><%= link_to image_tag('cross.png'), admin_delete_section_path(section.id), :style=>"padding-right:20px;", :class=>"confirm", :title=>"Are you sure you want to delete this Section?"%>  <%= link_to image_tag('pencil.png'), admin_edit_section_path(section.id) %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<script>
+    $('#dt3').dataTable({
+        "bJQueryUI":true,
+        "sPaginationType":"full_numbers"
+    });
+</script>
+

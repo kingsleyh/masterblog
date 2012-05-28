@@ -23,7 +23,7 @@ class Admin::ArticlesController < ApplicationController
     if @article.update_attributes(params[:article])
       redirect_to admin_index_path
     else
-      render edit_article_path
+      render admin_edit_article_path(@article.id)
     end
   end
 

@@ -27,6 +27,14 @@
 
           <div class="form-item"><%= f.text_field :tags %></div>
         </div>
+        <div class="form-row">
+          <p class="form-label">Section:</p>
+          <% if Section.all.empty? %>
+            <p>Please <%= link_to("Create a Section", admin_new_section_path)  %> First</p>
+          <% else %>
+            <div class="form-item"><%= f.select(:section_id, Section.all.collect{|s| [s.name,s.id]}) %></div>
+          <% end %>
+        </div>
         <%= f.hidden_field(:user_id, :value => current_user.id) %>
         <div style="float:right;">
           <input type="submit" class="button yellow" value="Create Article">
@@ -79,6 +87,7 @@
 
 
     <div class="clear"></div>
+  </div>
   </div>
 
   <div class="grid_8">

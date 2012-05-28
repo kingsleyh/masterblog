@@ -64,6 +64,12 @@ Masterthought::Application.routes.draw do
     match "/uploads/new" => "uploads#new", :as => :new_upload
     match "/uploads/create" => "uploads#create", :as => :create_upload
     match "/uploads/delete/:id" => "uploads#delete", :as => :delete_upload
+
+    match "/sections/new" => "sections#new", :as => :new_section
+    match "/sections/create" => "sections#create", :as => :create_section
+    match "/sections/edit/:id" => "sections#edit", :as => :edit_section
+    match "/sections/update/:id" => "sections#update", :as => :update_section
+    match "/sections/delete/:id" => "sections#delete", :as => :delete_section
   end
 
   resources :services, :only => [:index, :create, :destroy] do

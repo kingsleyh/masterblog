@@ -1,7 +1,7 @@
      
      <div class="grid_3" style="padding-bottom:20px;">
         <%= link_to "New Article", admin_new_article_path, :class => "button orange", :style=>"color:black;", :id=>"new_article"%>
-        <%= link_to "New Section", '#', :class => "button blue", :style=>"color:black;"%>
+        <%= link_to "New Section", admin_new_section_path, :class => "button blue", :style=>"color:black;"%>
         <%= link_to "Upload Asset", admin_new_upload_path, :class => "button purple", :style=>"color:black;"%>
      </div>
 
@@ -12,6 +12,7 @@
        <thead>
          <tr>
            <th>Article</th>
+           <th>Section</th>
            <th>Tags</th>
            <th>Comments</th>
            <th>Published</th>
@@ -23,6 +24,7 @@
        <%  @articles.sort_by{|x| x.created_at}.reverse.each_with_index do |article,i| %>
          <tr class="<%= (i%2 == 0) ? "even" : "odd"%>">
            <td><span id="<%=i%>_title"><%= article.title %></span></td>
+           <td align="center"><span id="<%=i%>_tags"><%=  article.section.name %></span></td>
            <td align="center"><span id="<%=i%>_tags"><%=  article.tags %></span></td>
            <td align="center"><span id="<%=i%>_comments">none</span></td>
            <td align="center"><span id="<%=i%>_time"><%= article.created_at.strftime("%x %X") %></span></td>
