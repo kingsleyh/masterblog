@@ -9,11 +9,60 @@
           <div class="form-item"><%= f.text_field :name %></div>
         </div>
 
+        <div class="form-row">
+          <p class="form-label">Content:</p>
+
+          <div class="form-item"><%= f.text_area :content, :class => "markdown-content" %></div>
+        </div>
+
         <div style="float:right;">
           <input type="submit" class="button yellow" value="Create Section">
         </div>
 
     <% end %>
+    <div class="clear"></div>
+  </div>
+</div>
+
+<div class="box grid_4">
+  <div class="box-head"><h2>Snippets</h2></div>
+  <div class="box-content no-pad">
+    <table class="display" id="dt4">
+      <thead>
+      <tr>
+        <th>Snippet</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+
+      <script>
+          ZeroClipboard.setMoviePath('/assets/zeroclipboard/ZeroClipboard.swf');
+      </script>
+
+      <% @snippets.sort_by { |x| x.created_at }.reverse.each_with_index do |snippet, i| %>
+          <tr>
+            <td align="center"><%= snippet.name %></td>
+            <td align="center">
+
+              <div id="d_clip_container_<%= i %>" style="position:relative">
+                <button type="button" id="d_clip_button_<%= i %>" class="button purple">Copy</button>
+
+              </div>
+
+              <script>
+                  var clip_<%= i %> = new ZeroClipboard.Client();
+                  clip_<%= i %>.setText('Snippet.get(<%= snippet.name %>)');
+                  clip_<%= i %>.glue('d_clip_button_<%= i %>', 'd_clip_container_<%= i %>');
+              </script>
+
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+
     <div class="clear"></div>
   </div>
 </div>
@@ -38,8 +87,8 @@
       <tbody>
       <% @sections.sort_by { |x| x.created_at }.reverse.each do |section| %>
           <tr>
-           <td><%=  section.name %></td>
-            <td align="center"><%= link_to image_tag('cross.png'), admin_delete_section_path(section.id), :style=>"padding-right:20px;", :class=>"confirm", :title=>"Are you sure you want to delete this Section?"%>  <%= link_to image_tag('pencil.png'), admin_edit_section_path(section.id) %></td>
+            <td><%= section.name %></td>
+            <td align="center"><%= link_to image_tag('cross.png'), admin_delete_section_path(section.id), :style => "padding-right:20px;", :class => "confirm", :title => "Are you sure you want to delete this Section?" %>  <%= link_to image_tag('pencil.png'), admin_edit_section_path(section.id) %></td>
           </tr>
       <% end %>
       </tbody>
@@ -49,9 +98,23 @@
 
 
 <script>
+    CodeMirror.fromTextArea(document.getElementsByClassName("markdown-content")[0], {
+        mode:'markdown',
+        matchBrackets:true,
+        theme:"eclipse"
+    });
+
+
     $('#dt3').dataTable({
         "bJQueryUI":true,
         "sPaginationType":"full_numbers"
     });
+
+    $('#dt4').dataTable({
+        "bJQueryUI":true,
+        "sPaginationType":"full_numbers"
+    });
+
 </script>
+
 

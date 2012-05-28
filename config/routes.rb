@@ -70,6 +70,12 @@ Masterthought::Application.routes.draw do
     match "/sections/edit/:id" => "sections#edit", :as => :edit_section
     match "/sections/update/:id" => "sections#update", :as => :update_section
     match "/sections/delete/:id" => "sections#delete", :as => :delete_section
+
+    match "/snippets/new" => "snippets#new", :as => :new_snippet
+    match "/snippets/create" => "snippets#create", :as => :create_snippet
+    match "/snippets/edit/:id" => "snippets#edit", :as => :edit_snippet
+    match "/snippets/update/:id" => "snippets#update", :as => :update_snippet
+    match "/snippets/delete/:id" => "snippets#delete", :as => :delete_snippet
   end
 
   resources :services, :only => [:index, :create, :destroy] do

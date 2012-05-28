@@ -1,7 +1,7 @@
 <div class="box grid_8">
-  <div class="box-head"><h2>Edit Section</h2></div>
+  <div class="box-head"><h2>Edit Snippet</h2></div>
   <div class="box-content">
-    <%= form_for @section, :as => :section, :url => admin_update_section_url, :html => {:class => 'block-content form'} do |f| %>
+    <%= form_for @snippet, :as => :snippet, :url => admin_update_snippet_url, :html => {:class => 'block-content form'} do |f| %>
 
         <div class="form-row">
           <p class="form-label">Name:</p>
@@ -16,7 +16,7 @@
         </div>
 
         <div style="float:right;">
-          <input type="submit" class="button yellow" value="Update Section">
+          <input type="submit" class="button yellow" value="Update Snippet">
         </div>
 
     <% end %>
@@ -25,7 +25,7 @@
 </div>
 
 <div class="grid_8">
-  <% @section.errors.full_messages.each do |msg| %>
+  <% @snippet.errors.full_messages.each do |msg| %>
       <div class="ad-notif-error"><p><%= msg %></p></div>
   <% end %>
 </div>
