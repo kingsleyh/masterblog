@@ -5,12 +5,14 @@ class Admin::SectionsController < ApplicationController
   def new
     @sections = Section.all
     @snippets = Snippet.all
+    @uploads = Upload.all
     @section = Section.new
   end
 
   def create
     @sections = Section.all
     @snippets = Snippet.all
+    @uploads = Upload.all
     @section = Section.new(params[:section])
     if @section.save
       redirect_to admin_new_section_path
@@ -22,6 +24,7 @@ class Admin::SectionsController < ApplicationController
   def update
     @sections = Section.all
     @snippets = Snippet.all
+    @uploads = Upload.all
     @section = Section.find(params[:id])
     if @section.update_attributes(params[:section])
       redirect_to admin_new_section_path
@@ -33,6 +36,7 @@ class Admin::SectionsController < ApplicationController
   def edit
     @sections = Section.all
     @snippets = Snippet.all
+    @uploads = Upload.all
     @section = Section.find(params[:id])
   end
 

@@ -52,6 +52,7 @@
       <thead>
       <tr>
         <th>Upload</th>
+        <th>Type</th>
         <th>Path</th>
         <th>Action</th>
       </tr>
@@ -64,7 +65,14 @@
 
       <% @uploads.sort_by { |x| x.created_at }.reverse.each_with_index do |upload, i| %>
           <tr>
-            <td align="center"><%= link_to((image_tag upload.upload.url(:thumb), :style => "border: 1px solid black;"), upload.upload.url(:large), {:id => "upload_#{i}"}) %></td>
+            <td align="center">
+              <% if upload.is_image? %>
+              <%= link_to((image_tag upload.upload.url(:thumb), :style => "border: 1px solid black;"), upload.upload.url(:large), {:id => "upload_#{i}"}) %>
+              <% else %>
+              <%=  link_to( image_tag('mime/text.png', :height => 48, :width => 48), upload.upload.url, {:id => "upload_#{i}"}) %>
+              <% end %>
+            </td>
+            <td align="center"><%= upload.upload_content_type %></td>
             <td align="center"><%= upload.file_name %></td>
             <td align="center">
 

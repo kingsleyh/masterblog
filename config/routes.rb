@@ -46,6 +46,7 @@ Masterthought::Application.routes.draw do
   #     resources :products
   #   end
 
+  match "/section/:id" => "master#section"
   match "/signout" => "services#signout"
 
   match '/auth/:service/callback' => 'services#create'
@@ -96,7 +97,7 @@ Masterthought::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'users#index'
+  root :to => 'master#section'
 
   # See how all your routes lay out with "rake routes"
 
