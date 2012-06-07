@@ -1,5 +1,5 @@
 Feature: login
-  As a blogger
+  As an avid blogger
   I want to log in to my blog
   So that I can make blog posts
 

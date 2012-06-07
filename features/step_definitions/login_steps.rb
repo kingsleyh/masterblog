@@ -13,9 +13,10 @@ Given /^I have logged in$/ do
 end
 
 Then /^I should be asked to create a new user with the following credentials:$/ do |table|
-  actual_data = table.rows_hash
-  expected_data = {"provider" => "facebook", "name" => "foo", "email" => "foobar@example.com"}
-  assert_equal(expected_data, actual_data, "facebook account data does not match")
+  ed = table.rows_hash
+  find('#account_provider').has_content?(ed[:provider])
+  find('#account_name').has_content?(ed[:name])
+  find('#account_email').has_content?(ed[:email])
 end
 
 When /^I create the first user$/ do
