@@ -3,7 +3,9 @@ class Upload < ActiveRecord::Base
 
   IMAGE_CONTENT_TYPE = ['image/jpeg', 'image/jpg', 'image/png']
 
-  has_attached_file :upload, :styles => { :medium => "300x300>", :thumb => "100x100>", :large => "500x500>"}
+  has_attached_file :upload, :styles => { :medium => "300x300>", :thumb => "100x100>", :large => "500x500>"},
+   :path => ":rails_root/public/system/:attachment/:style_:basename.:extension" ,
+   :url => "/system/:attachment/:style_:basename.:extension"
   validates_attachment :upload, :presence => true
     #:content_type => { :content_type => IMAGE_CONTENT_TYPE },
     #:size => { :in => 0..500.kilobytes }
@@ -16,7 +18,7 @@ class Upload < ActiveRecord::Base
   end
 
   def file_name
-    upload.url(:medium).split("/")[-1].split("?")[0]
+    upload.url(:original).split("/")[-1].split("?")[0]
   end
 
   def is_image?

@@ -1,6 +1,8 @@
 class Admin::UploadsController < ApplicationController
-  before_filter :authenticate_user!
+  skip_before_filter :verify_authenticity_token, :only => [:create]
+  before_filter :authenticate_user!, :except => [:create]
   layout 'admin_layout'
+
 
   def new
     @uploads = Upload.all
@@ -8,12 +10,14 @@ class Admin::UploadsController < ApplicationController
   end
 
   def create
-    @upload = Upload.new(params[:upload])
+    params[:upload][:upload].content_type = MIME::Types.type_for(params[:upload][:upload].original_filename).first.to_s
+    @upload = Upload.new
+    @upload.upload = params[:upload][:upload]
     @uploads = Upload.all
     if @upload.save
-      redirect_to admin_new_upload_path
+       render :json => { 'status' => 'success'  }
     else
-      render admin_new_upload_path
+       render :json => { 'status' => 'error' }
     end
   end
 

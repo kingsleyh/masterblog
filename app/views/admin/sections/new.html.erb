@@ -79,10 +79,14 @@
 
               </div>
 
-              <script>
-                  var clip_<%= i %> = new ZeroClipboard.Client();
-                  clip_<%= i %>.setText("<\%= Snippet.get('<%= snippet.name %>') %>");
-                  clip_<%= i %>.glue('d_clip_button_s<%= i %>', 'd_clip_container_s<%= i %>');
+               <script>
+                  function copyText_<%= i %>(event) {
+                      var clip_<%= i %> = new ZeroClipboard.Client();
+                      clip_<%= i %>.setText("<\%= Snippet.get('<%= snippet.name %>') %>");
+                      clip_<%= i %>.glue('d_clip_button_s<%= i %>', 'd_clip_container_s<%= i %>');
+                  }
+
+                  $('#d_clip_button_s<%= i %>').mouseover(copyText_<%= i%>);
               </script>
 
             </td>
@@ -117,11 +121,11 @@
       <% @uploads.sort_by { |x| x.created_at }.reverse.each_with_index do |upload, i| %>
           <tr>
             <td>
-            <% if upload.is_image? %>
-                <%= link_to((image_tag upload.upload.url(:thumb), :style => "border: 1px solid black;"), upload.upload.url(:large), {:id => "upload_#{i}"}) %>
-            <% else %>
-                <%= link_to(image_tag('mime/text.png', :height => 48, :width => 48), upload.upload.url, {:id => "upload_#{i}"}) %>
-            <% end %>
+              <% if upload.is_image? %>
+                  <%= link_to((image_tag upload.upload.url(:thumb), :style => "border: 1px solid black;"), upload.upload.url(:large), {:id => "upload_#{i}"}) %>
+              <% else %>
+                  <%= link_to(image_tag('mime/text.png', :height => 48, :width => 48), upload.upload.url, {:id => "upload_#{i}"}) %>
+              <% end %>
             </td>
             <td align="center"><%= upload.upload_content_type %></td>
             <td align="center"><%= upload.file_name %></td>
@@ -133,9 +137,13 @@
               </div>
 
               <script>
-                  var clip_<%= i %> = new ZeroClipboard.Client();
-                  clip_<%= i %>.setText('<%= upload.upload.url(:medium).split('?')[0]%>');
-                  clip_<%= i %>.glue('d_clip_button_<%= i %>', 'd_clip_container_<%= i %>');
+                  function copyText_<%= i %>(event) {
+                      var clip_<%= i %> = new ZeroClipboard.Client();
+                      clip_<%= i %>.setText('<%= upload.upload.url(:medium).split('?')[0]%>');
+                      clip_<%= i %>.glue('d_clip_button_<%= i %>', 'd_clip_container_<%= i %>');
+                  }
+
+                  $('#d_clip_button_<%= i %>').mouseover(copyText_<%= i%>);
               </script>
 
             </td>

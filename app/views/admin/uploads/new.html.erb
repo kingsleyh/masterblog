@@ -3,15 +3,36 @@
   <div class="box-content">
     <%= form_for @upload, :as => :upload, :url => admin_create_upload_url, :html => {:multipart => true, :class => 'block-content form'} do |f| %>
 
+        <script type="text/javascript">
+            <%- session_key = Rails.application.config.session_options[:key] -%>
+            $(function () {
+
+                var uploadify_script_data = {};
+
+                // Fetch the CSRF meta tag data
+                var csrf_token = $('meta[name=csrf-token]').attr('content');
+                var csrf_param = $('meta[name=csrf-param]').attr('content');
+
+                // Now associate the data in the config, encoding the data safely
+                uploadify_script_data[csrf_token] = encodeURI(csrf_param);
+
+                // Associate the session information
+                uploadify_script_data['<%= session_key %>'] = '<%= cookies[session_key] %>';
+
+                $('#upload_upload').uploadify({
+                    'fileObjName' : 'upload[upload]',
+                    'swf'      : '/assets/uploadify-v3.1/uploadify.swf',
+                    'uploader'  : '<%= admin_create_upload_url %>',
+                    'buttonText' : 'Select Files...',
+                    'onQueueComplete' : function(queueData) {
+                      window.location.reload();
+        }
+                });
+            });
+        </script>
+
         <div class="form-row">
-          <p class="form-label">Upload:</p>
-
           <div class="form-item"><%= f.file_field :upload %></div>
-        </div>
-
-
-        <div style="float:right;">
-          <input type="submit" class="button yellow" value="Upload">
         </div>
 
     <% end %>

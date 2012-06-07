@@ -175,6 +175,7 @@ DEPENDENCIES
   execjs
   jquery-rails
   launchy
+  mime-types
   omniauth
   omniauth-facebook
   paperclip
