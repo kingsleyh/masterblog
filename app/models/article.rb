@@ -10,4 +10,25 @@ class Article < ActiveRecord::Base
   validates :content, :presence => true
   validates :section, :presence => true
 
+  def author
+    user.name
+  end
+
+  def self.find_by_tag(tag)
+    list = []
+    Article.all.collect{|a| list << a if a.tags.split(",").collect{|t| t.strip}.include?(tag.strip)}
+    list
+  end
+
+  def display_date
+    created_at.strftime("%A %B #{created_at.day.ordinalize} %Y")
+  end
+
+  def display_content
+   Redcarpet::Markdown.new(Redcarpet::Render::HTML,:autolink => true).render(content)
+  end
+
+  def display_excerpt
+    Redcarpet::Markdown.new(Redcarpet::Render::HTML,:autolink => true).render(excerpt)
+  end
 end

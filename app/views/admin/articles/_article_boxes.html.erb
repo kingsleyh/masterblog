@@ -37,7 +37,7 @@
              <script>
                   function copyText_<%= i %>(event) {
                       var clip_<%= i %> = new ZeroClipboard.Client();
-                      clip_<%= i %>.setText('<%= upload.upload.url(:original).split('?')[0]%>');
+                      clip_<%= i %>.setText('![<%= upload.file_name%>](<%= upload.upload.url(:original).split('?')[0]%>)');
                       clip_<%= i %>.glue('d_clip_button_<%= i %>', 'd_clip_container_<%= i %>');
                   }
 

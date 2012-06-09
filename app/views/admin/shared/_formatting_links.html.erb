@@ -1,8 +1,10 @@
+
 <select id="modeSelector">
-  <option>select mode</option>
-  <option>markdown</option>
-  <option>text/html</option>
-  <option>css</option>
+  <option <%= raw selected?(selection, :markdown)%> >markdown</option>
+  <option <%= raw selected?(selection, :text_html)%> >text/html</option>
+  <option <%= raw selected?(selection, :css)%> >css</option>
+  <option <%= raw selected?(selection, :javascript)%> >javascript</option>
+  <option <%= raw selected?(selection, :none)%> >none</option>
 </select>
 
 <a class="button blue" href="javascript:autoFormatSelection()">

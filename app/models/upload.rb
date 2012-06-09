@@ -27,11 +27,19 @@ class Upload < ActiveRecord::Base
 
   def is_text_file?
    mimes = upload_content_type.split("/")
-   mimes.include?('text') or mimes.include?('javascript')
+   mimes.include?('text') or is_javascript_file? or is_ruby_file?
   end
 
   def is_css_file?
     upload_content_type.split("/").include?('css')
+  end
+
+  def is_javascript_file?
+    upload_content_type.split("/").include?('javascript')
+  end
+
+  def is_ruby_file?
+    upload_content_type.split("/").include?('x-ruby')
   end
 
   def content

@@ -48,7 +48,18 @@
         "sPaginationType":"full_numbers"
     });
 
-    <% mode = @upload.is_css_file? ? 'css' : 'markdown'%>
+
+    <% if params[:action] == 'edit' %>
+
+    <%
+      if @upload.is_css_file?
+        mode = 'css'
+      elsif @upload.is_javascript_file?
+        mode = 'javascript'
+      else
+        mode = 'markdown'
+      end
+    %>
 
     var editor = CodeMirror.fromTextArea(document.getElementsByClassName("markdown-content")[0], {
         mode:'<%= mode %>',
@@ -75,4 +86,5 @@
         var range = getSelectedRange();
         editor.commentRange(isComment, range.from, range.to);
     }
+  <% end %>
 </script>

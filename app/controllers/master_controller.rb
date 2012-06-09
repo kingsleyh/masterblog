@@ -23,4 +23,13 @@ class MasterController < ApplicationController
     Section.find_by_name(section_name).slug
   end
 
+  def tags_with_links(article,section)
+    tags = article.tags
+    tags.empty? ? "Home" : tags.split(",").collect{|tag| '<a href="' + section_article_path(section_slug(section),tag.strip) + '">' + tag.strip + '</a>'}.join(",")
+  end
+
+  def author_with_links(article,section)
+    '<a href="' + section_article_path(section_slug(section),article.user.slug) + '">' + article.author + '</a>'
+  end
+
 end

@@ -16,7 +16,7 @@
         </div>
 
         <div style="float:right;">
-          <%= render :partial => 'admin/shared/formatting_links' %>
+          <%= render :partial => 'admin/shared/formatting_links', :locals => {:selection => @section } %>
           <input type="submit" class="button yellow" value="Create Section">
         </div>
 
