@@ -3,6 +3,8 @@ class Article < ActiveRecord::Base
   belongs_to :user
   belongs_to :section
 
+  extend FriendlyId
+  friendly_id :title, :use => :slugged
 
   validates :title, :presence => true
   validates :content, :presence => true

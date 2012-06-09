@@ -1,0 +1,78 @@
+<div class="grid_8">
+  <% @upload.errors.full_messages.each do |msg| %>
+      <div class="ad-notif-error"><p><%= msg %></p></div>
+  <% end %>
+</div>
+
+
+<div class="box grid_8">
+  <div class="box-head"><h2>Uploads</h2></div>
+  <div class="box-content no-pad">
+    <table class="display" id="dt3">
+      <thead>
+      <tr>
+        <th>Upload</th>
+        <th>Type</th>
+        <th>Path</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @uploads.sort_by { |x| x.created_at }.reverse.each do |upload| %>
+          <tr>
+            <td>
+              <% if upload.is_image? %>
+                  <%= link_to((image_tag upload.upload.url(:medium), :style => "border: 1px solid black;"), upload.upload.url(:original)) %>
+              <% else %>
+                  <%= link_to(image_tag('mime/text.png', :height => 48, :width => 48), upload.upload.url) %>
+              <% end %>
+            </td>
+            <td align="center"><%= upload.upload_content_type %></td>
+            <td align="center"><%= upload.file_name %></td>
+            <td align="center"><%= link_to image_tag('cross.png'), admin_delete_upload_path(upload.id), :style => "padding-right:20px;", :class => "confirm", :title => "Are you sure you want to delete this Upload?" %>
+              <% if upload.is_text_file? %>
+                  <%= link_to image_tag('pencil.png'), admin_edit_upload_path(upload.id) %>
+              <% end %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<script>
+    $('#dt3').dataTable({
+        "bJQueryUI":true,
+        "sPaginationType":"full_numbers"
+    });
+
+    <% mode = @upload.is_css_file? ? 'css' : 'markdown'%>
+
+    var editor = CodeMirror.fromTextArea(document.getElementsByClassName("markdown-content")[0], {
+        mode:'<%= mode %>',
+        matchBrackets:true,
+        lineNumbers:true,
+        theme:'eclipse',
+        onCursorActivity:function () {
+            editor.matchHighlight("CodeMirror-matchhighlight");
+        }
+    });
+
+
+    function getSelectedRange() {
+        return { from:editor.getCursor(true), to:editor.getCursor(false) };
+    }
+
+    function autoFormatSelection() {
+        CodeMirror.commands["selectAll"](editor);
+        var range = getSelectedRange();
+        editor.autoFormatRange(range.from, range.to);
+    }
+
+    function commentSelection(isComment) {
+        var range = getSelectedRange();
+        editor.commentRange(isComment, range.from, range.to);
+    }
+</script>

@@ -35,6 +35,7 @@ gem 'therubyracer'
 gem 'redcarpet'
 gem 'paperclip'
 gem 'mime-types', :require => 'mime/types'
+gem "friendly_id"
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

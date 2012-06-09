@@ -1,0 +1,186 @@
+<div class="grid_12">
+  <% @section.errors.full_messages.each do |msg| %>
+      <div class="ad-notif-error"><p><%= msg %></p></div>
+  <% end %>
+</div>
+
+<div class="box grid_3">
+  <div class="box-head"><h2>Sections</h2></div>
+  <div class="box-content no-pad">
+    <table class="display" id="dt5">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @sections.sort_by { |x| x.created_at }.reverse.each do |section| %>
+          <tr>
+            <td><%= section.name %></td>
+            <td align="center"><%= link_to image_tag('cross.png'), admin_delete_section_path(section.id), :style => "padding-right:20px;", :class => "confirm", :title => "Are you sure you want to delete this Section?" %>  <%= link_to image_tag('pencil.png'), admin_edit_section_path(section.id) %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<div class="box grid_4">
+  <div class="box-head"><h2>Snippets</h2></div>
+  <div class="box-content no-pad">
+    <table class="display" id="dt4">
+      <thead>
+      <tr>
+        <th>Snippet</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+
+      <script>
+          ZeroClipboard.setMoviePath('/assets/zeroclipboard/ZeroClipboard.swf');
+      </script>
+
+      <% @snippets.sort_by { |x| x.created_at }.reverse.each_with_index do |snippet, i| %>
+          <tr>
+            <td align="center"><%= snippet.name %></td>
+            <td align="center">
+
+              <div id="d_clip_container_s<%= i %>" style="position:relative">
+                <button type="button" id="d_clip_button_s<%= i %>" class="button purple">Copy</button>
+
+              </div>
+
+              <script>
+                  function copyText_<%= i %>(event) {
+                      var clip_<%= i %> = new ZeroClipboard.Client();
+                      clip_<%= i %>.setText("<\%= Snippet.get('<%= snippet.name %>') %>");
+                      clip_<%= i %>.glue('d_clip_button_s<%= i %>', 'd_clip_container_s<%= i %>');
+                  }
+
+                  $('#d_clip_button_s<%= i %>').mouseover(copyText_<%= i%>);
+              </script>
+
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+
+    <div class="clear"></div>
+  </div>
+</div>
+
+<div class="box grid_5">
+  <div class="box-head"><h2>Uploads</h2></div>
+  <div class="box-content no-pad">
+    <table class="display" id="dt3">
+      <thead>
+      <tr>
+        <th>Upload</th>
+        <th>Type</th>
+        <th>Path</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+
+      <script>
+          ZeroClipboard.setMoviePath('/assets/zeroclipboard/ZeroClipboard.swf');
+      </script>
+
+      <% @uploads.sort_by { |x| x.created_at }.reverse.each_with_index do |upload, i| %>
+          <tr>
+            <td>
+              <% if upload.is_image? %>
+                  <%= link_to((image_tag upload.upload.url(:thumb), :style => "border: 1px solid black;"), upload.upload.url(:large), {:id => "upload_#{i}"}) %>
+              <% else %>
+                  <%= link_to(image_tag('mime/text.png', :height => 48, :width => 48), upload.upload.url, {:id => "upload_#{i}"}) %>
+              <% end %>
+            </td>
+            <td align="center"><%= upload.upload_content_type %></td>
+            <td align="center"><%= upload.file_name %></td>
+            <td align="center">
+
+              <div id="d_clip_container_<%= i %>" style="position:relative">
+                <button type="button" id="d_clip_button_<%= i %>" class="button purple">Copy</button>
+
+              </div>
+
+              <script>
+                  function copyText_<%= i %>(event) {
+                      var clip_<%= i %> = new ZeroClipboard.Client();
+                      clip_<%= i %>.setText('<%= upload.upload.url(:original).split('?')[0]%>');
+                      clip_<%= i %>.glue('d_clip_button_<%= i %>', 'd_clip_container_<%= i %>');
+                  }
+
+                  $('#d_clip_button_<%= i %>').mouseover(copyText_<%= i%>);
+              </script>
+
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+
+    <div class="clear"></div>
+  </div>
+</div>
+
+<script>
+    var editor = CodeMirror.fromTextArea(document.getElementsByClassName("markdown-content")[0], {
+        mode:'text/html',
+        matchBrackets:true,
+        lineNumbers:true,
+        theme:'eclipse',
+        onCursorActivity:function () {
+            editor.matchHighlight("CodeMirror-matchhighlight");
+        },
+        extraKeys:{
+            "'>'":function (cm) {
+                cm.closeTag(cm, '>');
+            },
+            "'/'":function (cm) {
+                cm.closeTag(cm, '/');
+            }
+        }
+    });
+
+
+    function getSelectedRange() {
+        return { from:editor.getCursor(true), to:editor.getCursor(false) };
+    }
+
+    function autoFormatSelection() {
+        CodeMirror.commands["selectAll"](editor);
+        var range = getSelectedRange();
+        editor.autoFormatRange(range.from, range.to);
+    }
+
+    function commentSelection(isComment) {
+        var range = getSelectedRange();
+        editor.commentRange(isComment, range.from, range.to);
+    }
+
+    $('#dt3').dataTable({
+        "bJQueryUI":true,
+        "sPaginationType":"full_numbers"
+    });
+
+    $('#dt4').dataTable({
+        "bJQueryUI":true,
+        "sPaginationType":"full_numbers"
+    });
+
+    $('#dt5').dataTable({
+        "bJQueryUI":true,
+        "sPaginationType":"full_numbers"
+    });
+
+    $('#dt3 a').lightBox(); // Select all links in object with gallery ID
+
+</script>

@@ -3,11 +3,13 @@ class Admin::SnippetsController < ApplicationController
   layout 'admin_layout'
 
   def new
+    @uploads = Upload.all
     @snippets = Snippet.all
     @snippet = Snippet.new
   end
 
   def create
+    @uploads = Upload.all
     @snippets = Snippet.all
     @snippet = Snippet.new(params[:snippet])
     if @snippet.save
@@ -18,6 +20,7 @@ class Admin::SnippetsController < ApplicationController
   end
 
   def update
+    @uploads = Upload.all
     @snippets = Snippet.all
     @snippet = Snippet.find(params[:id])
     if @snippet.update_attributes(params[:snippet])
@@ -28,6 +31,7 @@ class Admin::SnippetsController < ApplicationController
   end
 
   def edit
+    @uploads = Upload.all
     @snippets = Snippet.all
     @snippet = Snippet.find(params[:id])
   end

@@ -1,0 +1,26 @@
+<select id="modeSelector">
+  <option>select mode</option>
+  <option>markdown</option>
+  <option>text/html</option>
+  <option>css</option>
+</select>
+
+<a class="button blue" href="javascript:autoFormatSelection()">
+  Autoformat
+</a>
+
+<a class="button grey" href="javascript:commentSelection(true)">
+  Comment Selected
+</a>
+
+<a class="button grey" href="javascript:commentSelection(false)">
+  Uncomment Selected
+</a>
+
+<script>
+    $('#modeSelector').change(function()
+     {
+         editor.setOption("mode", $(this).attr('value'));
+         CodeMirror.autoLoadMode(editor, $(this).attr('value'));
+     });
+</script>

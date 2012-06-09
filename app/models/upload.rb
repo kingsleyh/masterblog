@@ -1,7 +1,7 @@
 class Upload < ActiveRecord::Base
-  attr_accessible :upload
+  attr_accessible :upload, :content
 
-  IMAGE_CONTENT_TYPE = ['image/jpeg', 'image/jpg', 'image/png']
+  IMAGE_CONTENT_TYPE = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/tiff']
 
   has_attached_file :upload, :styles => { :medium => "300x300>", :thumb => "100x100>", :large => "500x500>"},
    :path => ":rails_root/public/system/:attachment/:style_:basename.:extension" ,
@@ -24,5 +24,23 @@ class Upload < ActiveRecord::Base
   def is_image?
     IMAGE_CONTENT_TYPE.include?(upload_content_type)
   end
+
+  def is_text_file?
+   mimes = upload_content_type.split("/")
+   mimes.include?('text') or mimes.include?('javascript')
+  end
+
+  def is_css_file?
+    upload_content_type.split("/").include?('css')
+  end
+
+  def content
+    File.read(upload.path(:original))
+  end
+
+  def content=(new_content)
+    File.open(upload.path(:original),"w"){|f| f.puts new_content}
+  end
+
 
 end

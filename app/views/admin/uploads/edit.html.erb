@@ -1,12 +1,12 @@
-<div class="box grid_10">
-  <div class="box-head"><h2>Edit Snippet</h2></div>
+<div class="box grid_8">
+  <div class="box-head"><h2>Edit Upload</h2></div>
   <div class="box-content">
-    <%= form_for @snippet, :as => :snippet, :url => admin_update_snippet_url, :html => {:class => 'block-content form'} do |f| %>
+    <%= form_for @upload, :as => :upload, :url => admin_update_upload_url, :html => {:multipart => true, :class => 'block-content form'} do |f| %>
 
         <div class="form-row">
           <p class="form-label">Name:</p>
 
-          <div class="form-item"><%= f.text_field :name %></div>
+          <div class="form-item"><%= @upload.file_name %></div>
         </div>
 
         <div class="form-row">
@@ -17,7 +17,7 @@
 
         <div style="float:right;">
           <%= render :partial => 'admin/shared/formatting_links' %>
-          <input type="submit" class="button yellow" value="Update Snippet">
+          <input type="submit" class="button yellow" value="Update Content">
         </div>
 
     <% end %>
@@ -25,5 +25,7 @@
   </div>
 </div>
 
-<%= render :partial => 'admin/snippets/snippet_boxes' %>
+<%= render :partial => 'admin/uploads/upload_boxes' %>
+
+
 

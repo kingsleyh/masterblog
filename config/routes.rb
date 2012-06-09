@@ -46,6 +46,7 @@ Masterthought::Application.routes.draw do
   #     resources :products
   #   end
 
+
   match "/section/:id" => "master#section", :as => :section
   match "/section/:id/article/:article" => "master#section", :as => :section_article
 
@@ -67,6 +68,8 @@ Masterthought::Application.routes.draw do
     match "/uploads/new" => "uploads#new", :as => :new_upload
     match "/uploads/create" => "uploads#create", :as => :create_upload
     match "/uploads/delete/:id" => "uploads#delete", :as => :delete_upload
+    match "/uploads/edit/:id" => "uploads#edit", :as => :edit_upload
+    match "/uploads/update/:id" => "uploads#update", :as => :update_upload
 
     match "/sections/new" => "sections#new", :as => :new_section
     match "/sections/create" => "sections#create", :as => :create_section
