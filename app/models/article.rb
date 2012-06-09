@@ -25,10 +25,10 @@ class Article < ActiveRecord::Base
   end
 
   def display_content
-   Redcarpet::Markdown.new(Redcarpet::Render::HTML,:autolink => true).render(content)
+   Redcarpet::Markdown.new(Redcarpet::Render::HTML,:autolink => true, :fenced_code_blocks => true, :tables => true).render(content)
   end
 
   def display_excerpt
-    Redcarpet::Markdown.new(Redcarpet::Render::HTML,:autolink => true).render(excerpt)
+    Redcarpet::Markdown.new(Redcarpet::Render::HTML,:autolink => true, :fenced_code_blocks => true, :tables => true).render(excerpt)
   end
 end

@@ -24,7 +24,7 @@ class Admin::SnippetsController < ApplicationController
     @snippets = Snippet.all
     @snippet = Snippet.find(params[:id])
     if @snippet.update_attributes(params[:snippet])
-      redirect_to admin_new_snippet_path
+      redirect_to admin_edit_snippet_path(@snippet.id)
     else
       render admin_edit_snippet_path(@snippet.id)
     end
