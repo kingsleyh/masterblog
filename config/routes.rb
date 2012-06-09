@@ -46,7 +46,9 @@ Masterthought::Application.routes.draw do
   #     resources :products
   #   end
 
-  match "/section/:id" => "master#section"
+  match "/section/:id" => "master#section", :as => :section
+  match "/section/:id/article/:article" => "master#section", :as => :section_article
+
   match "/signout" => "services#signout"
 
   match '/auth/:service/callback' => 'services#create'

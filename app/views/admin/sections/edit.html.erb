@@ -30,7 +30,7 @@
   <% end %>
 </div>
 
-<div class="box grid_4">
+<div class="box grid_3">
   <div class="box-head"><h2>Sections</h2></div>
   <div class="box-content no-pad">
     <table class="display" id="dt5">
@@ -74,14 +74,18 @@
             <td align="center">
 
               <div id="d_clip_container_<%= i %>" style="position:relative">
-                <button type="button" id="d_clip_button_<%= i %>" class="button purple">Copy</button>
+                <button type="button" id="d_clip_button_s<%= i %>" class="button purple">Copy</button>
 
               </div>
 
               <script>
-                  var clip_<%= i %> = new ZeroClipboard.Client();
-                  clip_<%= i %>.setText("<\%= Snippet.get('<%= snippet.name %>') %>");
-                  clip_<%= i %>.glue('d_clip_button_<%= i %>', 'd_clip_container_<%= i %>');
+                  function copyText_<%= i %>(event) {
+                      var clip_<%= i %> = new ZeroClipboard.Client();
+                      clip_<%= i %>.setText("<\%= Snippet.get('<%= snippet.name %>') %>");
+                      clip_<%= i %>.glue('d_clip_button_s<%= i %>', 'd_clip_container_s<%= i %>');
+                  }
+
+                  $('#d_clip_button_s<%= i %>').mouseover(copyText_<%= i%>);
               </script>
 
             </td>
@@ -95,13 +99,14 @@
   </div>
 </div>
 
-<div class="box grid_4">
+<div class="box grid_5">
   <div class="box-head"><h2>Uploads</h2></div>
   <div class="box-content no-pad">
     <table class="display" id="dt3">
       <thead>
       <tr>
         <th>Upload</th>
+        <th>Type</th>
         <th>Path</th>
         <th>Action</th>
       </tr>
@@ -114,7 +119,14 @@
 
       <% @uploads.sort_by { |x| x.created_at }.reverse.each_with_index do |upload, i| %>
           <tr>
-            <td align="center"><%= link_to((image_tag upload.upload.url(:thumb), :style => "border: 1px solid black;"), upload.upload.url(:large), {:id => "upload_#{i}"}) %></td>
+            <td>
+              <% if upload.is_image? %>
+                  <%= link_to((image_tag upload.upload.url(:thumb), :style => "border: 1px solid black;"), upload.upload.url(:large), {:id => "upload_#{i}"}) %>
+              <% else %>
+                  <%= link_to(image_tag('mime/text.png', :height => 48, :width => 48), upload.upload.url, {:id => "upload_#{i}"}) %>
+              <% end %>
+            </td>
+            <td align="center"><%= upload.upload_content_type %></td>
             <td align="center"><%= upload.file_name %></td>
             <td align="center">
 
@@ -124,9 +136,13 @@
               </div>
 
               <script>
-                  var clip_<%= i %> = new ZeroClipboard.Client();
-                  clip_<%= i %>.setText('<%= upload.upload.url(:original).split('?')[0]%>');
-                  clip_<%= i %>.glue('d_clip_button_<%= i %>', 'd_clip_container_<%= i %>');
+                  function copyText_<%= i %>(event) {
+                      var clip_<%= i %> = new ZeroClipboard.Client();
+                      clip_<%= i %>.setText('<%= upload.upload.url(:original).split('?')[0]%>');
+                      clip_<%= i %>.glue('d_clip_button_<%= i %>', 'd_clip_container_<%= i %>');
+                  }
+
+                  $('#d_clip_button_<%= i %>').mouseover(copyText_<%= i%>);
               </script>
 
             </td>

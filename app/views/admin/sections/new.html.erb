@@ -30,7 +30,7 @@
   <% end %>
 </div>
 
-<div class="box grid_4">
+<div class="box grid_3">
   <div class="box-head"><h2>Sections</h2></div>
   <div class="box-content no-pad">
     <table class="display" id="dt5">
@@ -100,7 +100,7 @@
   </div>
 </div>
 
-<div class="box grid_4">
+<div class="box grid_5">
   <div class="box-head"><h2>Uploads</h2></div>
   <div class="box-content no-pad">
     <table class="display" id="dt3">
@@ -139,7 +139,7 @@
               <script>
                   function copyText_<%= i %>(event) {
                       var clip_<%= i %> = new ZeroClipboard.Client();
-                      clip_<%= i %>.setText('<%= upload.upload.url(:medium).split('?')[0]%>');
+                      clip_<%= i %>.setText('<%= upload.upload.url(:original).split('?')[0]%>');
                       clip_<%= i %>.glue('d_clip_button_<%= i %>', 'd_clip_container_<%= i %>');
                   }
 

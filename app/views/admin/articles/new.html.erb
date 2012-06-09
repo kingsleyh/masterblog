@@ -1,4 +1,4 @@
-<div class="box grid_8">
+<div class="box grid_7">
   <div class="box-head"><h2>Create New Article</h2></div>
   <div class="box-content">
     <%= form_for @article, :as => :article, :url => admin_create_article_url, :html => {:class => 'block-content form'} do |f| %>
@@ -45,7 +45,7 @@
   </div>
 </div>
 
-<div class="box grid_4">
+<div class="box grid_5">
   <div class="box-head"><h2>Uploads</h2></div>
   <div class="box-content no-pad">
     <table class="display" id="dt3">
@@ -81,10 +81,14 @@
 
               </div>
 
-              <script>
-                  var clip_<%= i %> = new ZeroClipboard.Client();
-                  clip_<%= i %>.setText('<%= upload.upload.url(:medium).split('?')[0]%>');
-                  clip_<%= i %>.glue('d_clip_button_<%= i %>', 'd_clip_container_<%= i %>');
+             <script>
+                  function copyText_<%= i %>(event) {
+                      var clip_<%= i %> = new ZeroClipboard.Client();
+                      clip_<%= i %>.setText('<%= upload.upload.url(:original).split('?')[0]%>');
+                      clip_<%= i %>.glue('d_clip_button_<%= i %>', 'd_clip_container_<%= i %>');
+                  }
+
+                  $('#d_clip_button_<%= i %>').mouseover(copyText_<%= i%>);
               </script>
 
             </td>
