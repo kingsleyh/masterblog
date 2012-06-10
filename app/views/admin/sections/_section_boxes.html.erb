@@ -56,7 +56,7 @@
               <script>
                   function copyText_<%= i %>(event) {
                       var clip_<%= i %> = new ZeroClipboard.Client();
-                      clip_<%= i %>.setText("<\%= Snippet.get('<%= snippet.name %>') %>");
+                      clip_<%= i %>.setText("<\%= get_snippet('<%= snippet.name %>') %>");
                       clip_<%= i %>.glue('d_clip_button_s<%= i %>', 'd_clip_container_s<%= i %>');
                   }
 

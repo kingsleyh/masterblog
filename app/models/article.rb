@@ -2,6 +2,7 @@ class Article < ActiveRecord::Base
   attr_accessible :title,:excerpt,:content,:tags,:user_id, :section_id
   belongs_to :user
   belongs_to :section
+  has_many :comments
 
   extend FriendlyId
   friendly_id :title, :use => :slugged

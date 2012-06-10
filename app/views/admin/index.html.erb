@@ -1,48 +1,79 @@
-     
-     <div class="grid_3" style="padding-bottom:20px;">
-        <%= link_to "New Article", admin_new_article_path, :class => "button orange", :style=>"color:black;", :id=>"new_article"%>
-        <%= link_to "New Section", admin_new_section_path, :class => "button blue", :style=>"color:black;"%>
-        <%= link_to "Upload Asset", admin_new_upload_path, :class => "button purple", :style=>"color:black;"%>
-     </div>
+<div class="grid_3" style="padding-bottom:20px;">
+  <%= link_to "New Article", admin_new_article_path, :class => "button orange", :style => "color:black;", :id => "new_article" %>
+  <%= link_to "New Section", admin_new_section_path, :class => "button blue", :style => "color:black;" %>
+  <%= link_to "Upload Asset", admin_new_upload_path, :class => "button purple", :style => "color:black;" %>
+</div>
 
-     <div class="box grid_12">
-       <div class="box-head"><h2>Articles</h2></div>
-       <div class="box-content no-pad">
-       <table class="display" id="articles">
-       <thead>
-         <tr>
-           <th>Article</th>
-           <th>Section</th>
-           <th>Tags</th>
-           <th>Comments</th>
-           <th>Published</th>
-           <th>Author</th>
-           <th>Actions</th>
-         </tr>
-       </thead>
-       <tbody>
-       <%  @articles.sort_by{|x| x.created_at}.reverse.each_with_index do |article,i| %>
-         <tr class="<%= (i%2 == 0) ? "even" : "odd"%>">
-           <td><span id="<%=i%>_title"><%= article.title %></span></td>
-           <td align="center"><span id="<%=i%>_tags"><%=  article.section.name %></span></td>
-           <td align="center"><span id="<%=i%>_tags"><%=  article.tags %></span></td>
-           <td align="center"><span id="<%=i%>_comments">none</span></td>
-           <td align="center"><span id="<%=i%>_time"><%= article.created_at.strftime("%x %X") %></span></td>
-           <td align="center"><span id="<%=i%>_name"><%=  article.user.name%></span></td>
-           <td align="center"><%= link_to image_tag('cross.png'), admin_delete_article_path(article.id), :style=>"padding-right:20px;", :class=>"confirm", :title=>"Are you sure you want to delete this Article?"%>  <%= link_to image_tag('pencil.png'), admin_edit_article_path(article.id) %></td>
-         </tr>
-         <% end %>  
-       </tbody>
-     </table>
-       </div>
-     </div>
+<div class="box grid_12">
+  <div class="box-head"><h2>Articles</h2></div>
+  <div class="box-content no-pad">
+    <table class="display" id="articles">
+      <thead>
+      <tr>
+        <th>Article</th>
+        <th>Section</th>
+        <th>Tags</th>
+        <th>Comments</th>
+        <th>Published</th>
+        <th>Author</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @articles.sort_by { |x| x.id }.reverse.each_with_index do |article, i| %>
+          <tr class="<%= (i%2 == 0) ? "even" : "odd" %>">
+            <td><span id="<%= i %>_title"><%= article.title %></span></td>
+            <td align="center"><span id="<%= i %>_tags"><%= article.section.name %></span></td>
+            <td align="center"><span id="<%= i %>_tags"><%= article.tags %></span></td>
+            <td align="center"><span id="<%= i %>_comments"><%= article.comments.size %></span></td>
+            <td align="center"><span id="<%= i %>_time"><%= article.created_at.strftime("%x %X") %></span></td>
+            <td align="center"><span id="<%= i %>_name"><%= article.user.name %></span></td>
+            <td align="center"><%= link_to image_tag('cross.png'), admin_delete_article_path(article.id), :style => "padding-right:20px;", :class => "confirm", :title => "Are you sure you want to delete this Article?" %>  <%= link_to image_tag('pencil.png'), admin_edit_article_path(article.id) %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
 
+<div class="box grid_12">
+  <div class="box-head"><h2>Comments</h2></div>
+  <div class="box-content no-pad">
+    <table class="display" id="comments">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Article</th>
+        <th>Comment</th>
+        <th>Published</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% Comment.all.sort_by { |x| x.id }.reverse.each_with_index do |comment, i| %>
+          <tr class="<%= (i%2 == 0) ? "even" : "odd" %>">
+            <td><span id="<%= i %>_name"><%= comment.name %></span></td>
+            <td align="center"><span id="<%= i %>_title"><%= comment.article.title %></span></td>
+            <td align="center"><span id="<%= i %>_content"><%= comment.content %></span></td>
+            <td align="center"><span id="<%= i %>_time"><%= comment.created_at.strftime("%x %X") %></span></td>
+            <td align="center"><%= link_to image_tag('cross.png'), admin_delete_comment_path(comment.id), :style => "padding-right:20px;", :class => "confirm", :title => "Are you sure you want to delete this Comment?" %>  <%= link_to image_tag('pencil.png'), admin_edit_comment_path(comment.id) %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
 
-     <script>
-         $('#articles').dataTable({
-             "bJQueryUI":true,
-             "sPaginationType":"full_numbers"
-         });
-     </script>
+<script>
+    $('#articles').dataTable({
+        "bJQueryUI":true,
+        "sPaginationType":"full_numbers"
+    });
+
+    $('#comments').dataTable({
+        "bJQueryUI":true,
+        "sPaginationType":"full_numbers"
+    });
+</script>
 
 

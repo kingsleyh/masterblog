@@ -1,0 +1,32 @@
+<div class="box grid_12">
+  <div class="box-head"><h2>Edit Comment</h2></div>
+  <div class="box-content">
+    <%= form_for @comment, :as => :comment, :url => admin_update_comment_url do |f| %>
+
+        <div class="form-row">
+          <p class="form-label">Name:</p>
+
+          <div class="form-item"><%= f.text_field :name %></div>
+        </div>
+
+        <div class="form-row">
+                  <p class="form-label">Email:</p>
+
+                  <div class="form-item"><%= f.text_field :email %></div>
+                </div>
+
+        <div class="form-row">
+          <p class="form-label">Content:</p>
+
+          <div class="form-item"><%= f.text_area :content, :class => "markdown-content" %></div>
+        </div>
+
+        <div style="float:right;">
+          <input type="submit" class="button yellow" value="Update Comment">
+        </div>
+
+    <% end %>
+    <div class="clear"></div>
+  </div>
+</div>
+

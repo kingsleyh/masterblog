@@ -58,6 +58,8 @@ Masterthought::Application.routes.draw do
   match "/admin" => "admin#index", :as => :admin_index
   match "/login" => "admin#login", :as => :admin_signin
 
+  match "/comments/create" => "comments#create", :as => :create_comment
+
   namespace :admin do
     match "/articles/new" => "articles#new", :as => :new_article
     match "/articles/create" => "articles#create", :as => :create_article
@@ -82,6 +84,10 @@ Masterthought::Application.routes.draw do
     match "/snippets/edit/:id" => "snippets#edit", :as => :edit_snippet
     match "/snippets/update/:id" => "snippets#update", :as => :update_snippet
     match "/snippets/delete/:id" => "snippets#delete", :as => :delete_snippet
+
+    match "/comments/edit/:id" => "comments#edit", :as => :edit_comment
+    match "/comments/update/:id" => "comments#update", :as => :update_comment
+    match "/comments/delete/:id" => "comments#delete", :as => :delete_comment
   end
 
   resources :services, :only => [:index, :create, :destroy] do

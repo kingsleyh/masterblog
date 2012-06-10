@@ -9,19 +9,6 @@
   <link rel="shortcut icon" href="favicon.gif">
   <link rel="stylesheet" href="/assets/CodeMirror-2.25/lib/codemirror.css">
   <link rel="stylesheet" href="/assets/CodeMirror-2.25/theme/eclipse.css">
-  <!---jQuery Files-->
-  <!--<script src="js/jquery-1.7.1.min.js"></script>-->
-  <!--<script src="js/jquery-ui-1.8.17.min.js"></script>-->
-  <!--<script src="js/styler.js"></script>-->
-  <!--<script src="js/jquery.tipTip.js"></script>-->
-  <!--<script src="js/colorpicker.js"></script>-->
-  <!--<script src="js/sticky.full.js"></script>-->
-  <!--<script src="js/global.js"></script>-->
-  <!--<script src="js/flot/jquery.flot.min.js"></script>-->
-  <!--<script src="js/flot/jquery.flot.resize.min.js"></script>-->
-  <!--<script src="js/jquery.dataTables.min.js"></script>-->
-  <!--<script src="js/forms/fileinput.js"></script>-->
-  <!--<script src="js/forms/iphone-check.js"></script>-->
   <!---Fonts-->
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Ubuntu:500' rel='stylesheet' type='text/css'>
@@ -71,24 +58,24 @@
         <ul id="top-nav">
           <li class="nav-item">
 
-            <a href="/admin"><img src="/assets/nav/tb-active.png" alt=""/>
+            <a href="/admin"><img src="/assets/nav/<%= active?(params[:controller],'admin','tb') %>" alt=""/>
 
               <p>Articles</p></a>
           </li>
           <li class="nav-item">
-            <a href="/admin/uploads/new"><img src="/assets/nav/gal.png" alt=""/>
+            <a href="/admin/uploads/new"><img src="/assets/nav/<%= active?(params[:controller],'admin/uploads','gal') %>" alt=""/>
 
               <p>Uploads</p></a>
           </li>
 
           <li class="nav-item">
-            <a href="/admin/sections/new"><img src="/assets/nav/flm.png" alt=""/>
+            <a href="/admin/sections/new"><img src="/assets/nav/<%= active?(params[:controller],'admin/sections','flm') %>" alt=""/>
 
               <p>Sections</p></a>
           </li>
 
           <li class="nav-item">
-            <a href="/admin/snippets/new"><img src="/assets/nav/icn.png" alt=""/>
+            <a href="/admin/snippets/new"><img src="/assets/nav/<%= active?(params[:controller],'admin/snippets','icn') %>" alt=""/>
 
               <p>Snippets</p></a>
           </li>
@@ -121,46 +108,6 @@
     <p>Powered by MasterBlog</p>
   </div>
 
-  <script> /* SCRIPTS */
-  //$(function () {
-  //    var sin = [], cos = [];
-  //    for (var i = 0; i < 14; i += 0.5) {
-  //        sin.push([i, Math.sin(i)]);
-  //        cos.push([i, Math.cos(i)]);
-  //    }
-  //    var plot = $.plot($("#flot-demo"),
-  //            [
-  //                { data:sin, label:"Green", color:"#71a100"},
-  //                { data:cos, label:"Blue", color:"#308eef" }
-  //            ], {
-  //                series:{
-  //                    lines:{ show:true },
-  //                    points:{ show:true }
-  //                },
-  //                grid:{ hoverable:true },
-  //                yaxis:{ min:-1.2, max:1.2 }
-  //            });
-  //    var previousPoint = null;
-  //    $("#flot-demo").bind("plothover", function (event, pos, item) {
-  //        if ($("#enablePosition:checked").length > 0) {
-  //            var str = "(" + pos.x.toFixed(2) + ", " + pos.y.toFixed(2) + ")";
-  //            $("#hoverdata").text(str);
-  //        }
-  //    });
-  //});
-  ///* for the flot chart demo */
-  //
-  //$('#example').dataTable({
-  //    "bJQueryUI":true
-  //});
-  ///* For the data tables */
-  //
-  //$('#iphone-check').iphoneStyle();
-  //$("#datepicker").datepicker();
-  //$("#colorpicker").ColorPicker();
-  ///* for the iPhone style checkbox, colorpicker and datepicker */
-
-  </script>
 </div>
 </body>
 
