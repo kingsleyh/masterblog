@@ -27,7 +27,7 @@ class Admin::SectionsController < ApplicationController
     @uploads = Upload.all
     @section = Section.find(params[:id])
     if @section.update_attributes(params[:section])
-      redirect_to admin_new_section_path
+      redirect_to admin_edit_section_path(@section.id)
     else
       render admin_edit_section_path
     end

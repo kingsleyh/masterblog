@@ -5,7 +5,7 @@ class Snippet < ActiveRecord::Base
   validates :content, :presence => true
 
   def self.get(snippet_name)
-    Snippet.find_by_name(snippet_name).content
+    ERB.new(Snippet.find_by_name(snippet_name).content).result(binding)
   end
 
 end
