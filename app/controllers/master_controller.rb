@@ -1,6 +1,9 @@
 class MasterController < ApplicationController
 
+
+
   def section
+    $captcha_key = Time.now.to_i.to_s + rand(10000).to_s
     if Section.all.empty?
       render :text => "Nothing To See"
     else
@@ -20,5 +23,6 @@ class MasterController < ApplicationController
   # -- Helpers -- #
 
  include BlogHelpers
+ include ActionView::Helpers::TextHelper
 
 end

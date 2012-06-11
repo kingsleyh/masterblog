@@ -17,6 +17,10 @@ module BlogHelpers
       '<a href="' + section_article_path(section_slug(section), article.user.slug) + '">' + article.author + '</a>'
     end
 
+    def captcha
+      '<div id="captchator-image"><img src="http://captchator.com/captcha/image/' + $captcha_key + '" /></div>'
+    end
+
     def paginate(model)
       current = model.current_page
 

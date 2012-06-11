@@ -11,4 +11,15 @@ class Comment < ActiveRecord::Base
       created_at.strftime("%A %B #{created_at.day.ordinalize} %Y at %X")
   end
 
+  def authenticate_captcha(key,answer)
+    result = "0"
+    begin
+      result = Net::HTTP.get(URI.parse("http://captchator.com/captcha/check_answer/#{key}/#{answer}"))
+    rescue => e
+      puts "rescue: #{e}"
+    end
+    result == "1"
+  end
+
+
 end
