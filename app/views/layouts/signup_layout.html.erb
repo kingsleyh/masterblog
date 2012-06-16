@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Masterthought</title>
+  <%= stylesheet_link_tag :master, :login, :ad, :all, 'iphone-check' %>
+  <%= javascript_include_tag :defaults, 'jquery-1.7.1.min', 'global' %>
+  <%= csrf_meta_tag %>
+  <link rel="shortcut icon" href="favicon.gif">
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+  <!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <!---FadeIn Effect, Validation and Spinner-->
+  <script>
+      $(document).ready(function () {
+          $('div.wrapper').hide();
+          $('div.wrapper').fadeIn(1200);
+      });
+  </script>
+</head>
+<body>
+<div class="wrapper">
+  <div class="logo">
+    <h1>SIGN UP PAGE</h1>
+  </div>
+  <div class="lg-body">
+    <div class="inner">
+      <div id="lg-head">
+        <p><span class="font-bold">New Account</span>: Please create an account.</p>
+
+        <div class="separator"></div>
+      </div>
+      <div style="text-align:center;" class="login">
+        <br/>
+
+        <div style="margin-left:70px;" class="service_in_use round">
+          <div class="service_img">
+            <% if ['aol', 'facebook', 'github', 'google', 'openid', 'twitter', 'yahoo'].index(@authhash[:provider]) %>
+                <%= image_tag "#{@authhash[:provider]}_64.png", :size => "64x64" %>
+            <% else %>
+                <%= image_tag "openid_64.png", :size => "64x64" %>
+            <% end %>
+          </div>
+
+          <div class="service_userdata">
+            <% if @authhash[:uid].starts_with?('http') %>
+                <%= @authhash[:uid].scan(/http[s]*:\/\/.*?\//)[0] %>
+            <% else %>
+                <%= @authhash[:provider].capitalize %>: <%= @authhash[:uid] %>
+            <% end %>
+            <br/>
+            <%= @authhash[:name] %>
+            <br/>
+            <%= @authhash[:email] %>
+            <br/>
+          </div>
+
+        </div>
+
+        <%= form_tag :controller => "services", :action => "newaccount" do %>
+                              <%= submit_tag "Confirm and create new account", :class => 'button yellow' %> <%= submit_tag "Cancel", :class => 'button grey' %>
+                          <% end %>
+
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+<div style="margin-top:10px;">
+  <% flash.each do |key, value| %>
+      <div class="ad-notif-<%= key %>"><p><%= value %></p></div>
+  <% end %>
+</div>
+</div>
+</body>
+</html>

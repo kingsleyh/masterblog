@@ -1,7 +1,6 @@
 class MasterController < ApplicationController
 
 
-
   def section
     $captcha_key = Time.now.to_i.to_s + rand(10000).to_s
     if Section.all.empty?
@@ -20,9 +19,25 @@ class MasterController < ApplicationController
     end
   end
 
+
+  def search
+    criteria = params[:s]
+    search_url = params[:searchurl]
+    if criteria.nil? or criteria.empty?
+      redirect_to root_url
+    else
+      criteria = criteria.gsub(/\W+/, '')
+      if criteria.empty?
+        redirect_to root_url
+      else
+        redirect_to search_url + "/" + criteria
+      end
+    end
+  end
+
   # -- Helpers -- #
 
- include BlogHelpers
- include ActionView::Helpers::TextHelper
+  include BlogHelpers
+  include ActionView::Helpers::TextHelper
 
 end

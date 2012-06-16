@@ -1,0 +1,39 @@
+<div class="box grid_8">
+  <div class="box-head"><h2>Users</h2></div>
+  <div class="box-content no-pad">
+    <table class="display" id="dt5">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Admin</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @users.sort_by { |x| x.created_at }.reverse.each do |user| %>
+          <tr>
+            <td><%= user.name %></td>
+            <td><span id="user-admin-edit-<%= user.id%>"><%= user.admin %></span></td>
+            <td align="center"><%= link_to image_tag('cross.png'), admin_delete_user_path(user.id), :style => "padding-right:20px;", :class => "confirm", :title => "Are you sure you want to delete this User?" %></td>
+            <script>
+                $('#user-admin-edit-<%= user.id%>').editable('<%= admin_update_user_path(user.id)%>', {
+                    data:" {'true':'True','false':'False'}",
+                    type:'select',
+                    submit:'OK'
+                });
+            </script>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+<script>
+    $('#dt5').dataTable({
+        "bJQueryUI":true,
+        "sPaginationType":"full_numbers"
+    });
+</script>

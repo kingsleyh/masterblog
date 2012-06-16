@@ -46,6 +46,12 @@ Masterthought::Application.routes.draw do
   #     resources :products
   #   end
 
+  resources :articles
+  match '/feed' => 'feeds#articles',
+        :as => :feed,
+        :defaults => {:format => 'atom'}
+
+  match "/search" => "master#search", :as => :search
 
   match "/section/:id" => "master#section", :as => :section
   match "/section/:id/article/:article" => "master#section", :as => :section_article
@@ -88,6 +94,17 @@ Masterthought::Application.routes.draw do
     match "/comments/edit/:id" => "comments#edit", :as => :edit_comment
     match "/comments/update/:id" => "comments#update", :as => :update_comment
     match "/comments/delete/:id" => "comments#delete", :as => :delete_comment
+
+    match "/users/show" => "users#show", :as => :show_users
+    match "/users/edit/:id" => "users#edit", :as => :edit_user
+    match "/users/update/:id" => "users#update", :as => :update_user
+    match "/users/delete/:id" => "users#delete", :as => :delete_user
+
+    match "/settings/new" => "settings#new", :as => :new_setting
+    match "/settings/create" => "settings#create", :as => :create_setting
+    match "/settings/update_key/:id" => "settings#update_key", :as => :update_key_setting
+    match "/settings/update_value/:id" => "settings#update_value", :as => :update_value_setting
+    match "/settings/delete/:id" => "settings#delete", :as => :delete_setting
   end
 
   resources :services, :only => [:index, :create, :destroy] do

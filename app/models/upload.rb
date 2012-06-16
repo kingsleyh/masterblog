@@ -1,5 +1,5 @@
 class Upload < ActiveRecord::Base
-  attr_accessible :upload, :content
+  attr_accessible :upload, :content, :id, :upload_file_name, :upload_content_type, :upload_file_size
 
   IMAGE_CONTENT_TYPE = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/tiff']
 

@@ -2,7 +2,6 @@ $(document).ready(function () {
       
       /* GLOBAL SCRIPTS */
 
-
     $(".confirm").easyconfirm();
 
     $("#excerpt_link").click(function() {

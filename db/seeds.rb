@@ -5,3 +5,9 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+
+
+seeds_dir = File.dirname(__FILE__) + '/seeds/'
+seeds = Dir.entries(seeds_dir).collect{|f| seeds_dir + f if f.match(".rb")}.compact
+seeds.each{|seed| require seed }

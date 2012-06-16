@@ -1,25 +1,27 @@
 class ServicesController < ApplicationController
   before_filter :authenticate_user!, :except => [:create, :signup, :newaccount, :failure]
   protect_from_forgery :except => :create
+  layout 'signup_layout'
+
 
   # GET all authentication services assigned to the current user
-  def index
-    @services = current_user.services.order('provider asc')
-  end
+  #def index
+  #  @services = current_user.services.order('provider asc')
+  #end
 
   # POST to remove an authentication service
-  def destroy
-    # remove an authentication service linked to the current user
-    @service = current_user.services.find(params[:id])
-
-    if session[:service_id] == @service.id
-      flash[:info] = 'You are currently signed in with this account!'
-    else
-      @service.destroy
-    end
-
-    redirect_to services_path
-  end
+  #def destroy
+  #  # remove an authentication service linked to the current user
+  #  @service = current_user.services.find(params[:id])
+  #
+  #  if session[:service_id] == @service.id
+  #    flash[:info] = 'You are currently signed in with this account!'
+  #  else
+  #    @service.destroy
+  #  end
+  #
+  #  redirect_to services_path
+  #end
 
   def signup
     @authhash = session[:authhash]
@@ -99,10 +101,10 @@ class ServicesController < ApplicationController
           if auth
             #flash[:info] = 'You are already logged in via ' + @authhash[:provider].capitalize
             redirect_to admin_index_path
-          else
-            current_user.services.create!(:provider => @authhash[:provider], :uid => @authhash[:uid], :uname => @authhash[:name], :uemail => @authhash[:email])
-            flash[:success] = 'Your ' + @authhash[:provider].capitalize + ' account has been added for signing in at this site.'
-            redirect_to admin_index_path
+          #else
+          #  current_user.services.create!(:provider => @authhash[:provider], :uid => @authhash[:uid], :uname => @authhash[:name], :uemail => @authhash[:email])
+          #  flash[:success] = 'Your ' + @authhash[:provider].capitalize + ' account has been added for signing in at this site.'
+          #  redirect_to admin_index_path
           end
         else
           if auth
@@ -131,10 +133,6 @@ class ServicesController < ApplicationController
       flash[:error] = 'Error while authenticating via ' + service_route.capitalize + '. The service did not return valid data.'
       redirect_to admin_signin_path
     end
-
-  end
-
-  def login_existing_user
 
   end
 

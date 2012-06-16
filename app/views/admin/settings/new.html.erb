@@ -1,0 +1,71 @@
+<div class="box grid_7">
+  <div class="box-head"><h2>Create New Setting</h2></div>
+  <div class="box-content">
+    <%= form_for @setting, :as => :setting, :url => admin_create_setting_url, :html => {:class => 'block-content form'} do |f| %>
+
+        <div class="form-row">
+          <p class="form-label">Key:</p>
+
+          <div class="form-item"><%= f.text_field :key %></div>
+        </div>
+
+        <div class="form-row">
+          <p class="form-label">Value:</p>
+
+          <div class="form-item"><%= f.text_field :value %></div>
+        </div>
+
+        <div style="float:right;">
+          <input type="submit" class="button yellow" value="Create Setting">
+        </div>
+
+    <% end %>
+    <div class="clear"></div>
+  </div>
+</div>
+
+<div class="grid_7">
+  <% @setting.errors.full_messages.each do |msg| %>
+      <div class="ad-notif-error"><p><%= msg %></p></div>
+  <% end %>
+</div>
+
+<div class="box grid_7">
+  <div class="box-head"><h2>Settings</h2></div>
+  <div class="box-content no-pad">
+    <table class="display" id="dt5">
+      <thead>
+      <tr>
+        <th>Key</th>
+        <th>Value</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @settings.sort_by { |x| x.created_at }.reverse.each do |setting| %>
+          <tr>
+            <td><span id="settings-admin-edit-key-<%= setting.id %>"><%= setting.key %></span></td>
+            <td><span id="settings-admin-edit-value-<%= setting.id %>"><%= setting.value %></span></td>
+            <td align="center"><%= link_to image_tag('cross.png'), admin_delete_setting_path(setting.id), :style => "padding-right:20px;", :class => "confirm", :title => "Are you sure you want to delete this Setting?" %> </td>
+            <script>
+                $('#settings-admin-edit-key-<%= setting.id%>').editable('<%= admin_update_key_setting_path(setting.id)%>', {
+                    submit:'OK'
+                });
+                $('#settings-admin-edit-value-<%= setting.id%>').editable('<%= admin_update_value_setting_path(setting.id)%>', {
+                    submit:'OK'
+                });
+            </script>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+    $('#dt5').dataTable({
+        "bJQueryUI":true,
+        "sPaginationType":"full_numbers"
+    });
+</script>
+
