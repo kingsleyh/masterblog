@@ -1,0 +1,110 @@
+<style type="text/css">
+    .demo {
+        background-color: #FFFFFF;
+        border-color: #BBBBBB #FFFFFF #FFFFFF #BBBBBB;
+        border-style: solid;
+        border-width: 1px;
+        overflow: scroll;
+        padding: 5px;
+    }
+</style>
+
+<div class="box grid_2">
+  <div class="box-head"><h2>File System</h2></div>
+  <div class="box-content no-pad">
+    <div id="fileTree" class="demo"></div>
+  </div>
+</div>
+
+<div class="box grid_8">
+  <div class="box-head"><h2>Edit File</h2></div>
+  <div class="box-content">
+
+    <%= form_for @systemfile, :as => :systemfile, :url => admin_update_extend_url, :html => {:multipart => true, :class => 'block-content form'} do |f| %>
+        <div class="form-row">
+          <p class="form-label">File Name:</p>
+
+          <div class="form-item"><%= @systemfile.filename %></div>
+          <%= f.hidden_field :filename, :value => @systemfile.filename %>
+        </div>
+
+        <div class="form-row">
+          <p class="form-label">File Path:</p>
+
+          <div class="form-item"><%= @systemfile.filepath %></div>
+          <%= f.hidden_field :filepath, :value => @systemfile.filepath %>
+        </div>
+
+        <div class="form-row">
+          <p class="form-label">Content:</p>
+
+          <div class="form-item"><%= f.text_area :content, :class => "markdown-content" %></div>
+        </div>
+
+        <div style="float:left;">
+          <%= link_to "Delete", admin_delete_extend_url(@systemfile.filename.gsub('.', "$"),@systemfile.filepath.gsub('/', "$")), {:class=>"button red"} %>
+        </div>
+        
+        <div style="float:right;">
+          <%= render :partial => 'admin/shared/formatting_links', :locals => {:selection => @systemfile} %>
+          <input type="submit" class="button yellow" value="Update File">
+        </div>
+
+    <% end %>
+    <div class="clear"></div>
+  </div>
+</div>
+
+<div class="grid_12">
+  <% @systemfile.errors.full_messages.each do |msg| %>
+      <div class="ad-notif-error"><p><%= msg %></p></div>
+  <% end %>
+</div>
+
+
+<script>
+
+    <%
+      if @systemfile.is_css_file?
+        mode = 'css'
+      elsif @systemfile.is_javascript_file?
+        mode = 'javascript'
+      elsif @systemfile.is_ruby_file?
+       mode = 'ruby'
+      else
+        mode = 'markdown'
+      end
+    %>
+
+
+    var editor = CodeMirror.fromTextArea(document.getElementsByClassName("markdown-content")[0], {
+        mode:'<%= mode %>',
+        matchBrackets:true,
+        lineNumbers:true,
+        theme:'eclipse',
+        onCursorActivity:function () {
+            editor.matchHighlight("CodeMirror-matchhighlight");
+        }
+    });
+
+
+    function getSelectedRange() {
+        return { from:editor.getCursor(true), to:editor.getCursor(false) };
+    }
+
+    function autoFormatSelection() {
+        CodeMirror.commands["selectAll"](editor);
+        var range = getSelectedRange();
+        editor.autoFormatRange(range.from, range.to);
+    }
+
+    function commentSelection(isComment) {
+        var range = getSelectedRange();
+        editor.commentRange(isComment, range.from, range.to);
+    }
+
+</script>
+
+
+
+

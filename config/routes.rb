@@ -105,6 +105,16 @@ Masterthought::Application.routes.draw do
     match "/settings/update_key/:id" => "settings#update_key", :as => :update_key_setting
     match "/settings/update_value/:id" => "settings#update_value", :as => :update_value_setting
     match "/settings/delete/:id" => "settings#delete", :as => :delete_setting
+
+    resources :Jqueryfiletree
+      match "/extend/content" => "extend#content", :as => :show_tree
+      match "/extend/new" => "extend#new", :as => :new_extend
+
+    match "/extend/create" => "extend#create", :as => :create_extend
+    match "/extend/update" => "extend#update", :as => :update_extend
+    match "/extend/edit/filename/:filename/filepath/:filepath" => "extend#edit", :as => :edit_extend
+    match "/extend/delete/filename/:filename/filepath/:filepath" => "extend#delete", :as => :delete_extend
+
   end
 
   resources :services, :only => [:index, :create, :destroy] do

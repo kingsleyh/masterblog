@@ -8,7 +8,12 @@ $(document).ready(function () {
       $("#excerpt-editor").fadeToggle("slow", "linear");
     });
 
-
+    $('#fileTree').fileTree({ root: '', script: '/admin/extend/content' }, function(file) {
+        var sp = file.split('/');
+        var filename = sp[sp.length-1].replace(/\./g,'$');
+        var filepath = sp.slice(0,sp.length-1).join("$");
+        window.location = "/admin/extend/edit/filename/" + escape(filename) +  "/filepath/" + filepath;
+    			});
 
       $('#top-nav li').hover(
        function () {

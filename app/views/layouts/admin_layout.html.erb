@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <title>Masterthought</title>
-  <%= stylesheet_link_tag :ad, :master, :tables, 'iphone-check', 'jquery.lightbox-0.5', 'uploadify-v3.1/uploadify.css' %>
-  <%= javascript_include_tag 'jquery-1.7.1.min.js', 'global.js', 'jquery-ui-1.8.17.min.js', 'jquery.tipTip.js', 'sticky.full.js', 'jquery.dataTables.min.js', 'forms/iphone-check.js', 'nicEdit.js', 'CodeMirror-2.25/lib/codemirror.js', 'CodeMirror-2.25/mode/markdown/markdown.js', 'CodeMirror-2.25/mode/xml/xml.js', 'CodeMirror-2.25/mode/css/css.js', 'CodeMirror-2.25/mode/htmlmixed/htmlmixed.js', 'CodeMirror-2.25/mode/javascript/javascript.js', 'CodeMirror-2.25/lib/util/match-highlighter.js', 'CodeMirror-2.25/lib/util/searchcursor.js', 'CodeMirror-2.25/lib/util/formatting.js', 'CodeMirror-2.25/lib/util/closetag.js', 'jquery.easy-confirm-dialog.js', 'jquery.lightbox-0.5.pack.js', 'zeroclipboard/ZeroClipboard.js', 'uploadify-v3.1/jquery.uploadify-3.1.js', 'jquery.jeditable.mini.js'%>
+  <%= stylesheet_link_tag :ad, :master, :tables, 'iphone-check', 'jquery.lightbox-0.5', 'uploadify-v3.1/uploadify.css', 'jqueryFileTree.css' %>
+  <%= javascript_include_tag 'jquery-1.7.1.min.js', 'global.js', 'jquery-ui-1.8.17.min.js', 'jquery.tipTip.js', 'sticky.full.js', 'jquery.dataTables.min.js', 'forms/iphone-check.js', 'nicEdit.js', 'CodeMirror-2.25/lib/codemirror.js', 'CodeMirror-2.25/mode/markdown/markdown.js', 'CodeMirror-2.25/mode/xml/xml.js', 'CodeMirror-2.25/mode/css/css.js', 'CodeMirror-2.25/mode/htmlmixed/htmlmixed.js', 'CodeMirror-2.25/mode/javascript/javascript.js', 'CodeMirror-2.25/mode/ruby/ruby.js', 'CodeMirror-2.25/lib/util/match-highlighter.js', 'CodeMirror-2.25/lib/util/searchcursor.js', 'CodeMirror-2.25/lib/util/formatting.js', 'CodeMirror-2.25/lib/util/closetag.js', 'jquery.easy-confirm-dialog.js', 'jquery.lightbox-0.5.pack.js', 'zeroclipboard/ZeroClipboard.js', 'uploadify-v3.1/jquery.uploadify-3.1.js', 'jquery.jeditable.mini.js', 'jquery.easing.js', 'jqueryFileTree.js' %>
   <%= csrf_meta_tag %>
   <link rel="shortcut icon" href="favicon.gif">
   <link rel="stylesheet" href="/assets/CodeMirror-2.25/lib/codemirror.css">
@@ -58,40 +58,45 @@
         <ul id="top-nav">
           <li class="nav-item">
 
-            <a href="/admin"><img src="/assets/nav/<%= active?(params[:controller],'admin','tb') %>" alt=""/>
+            <a href="/admin"><img src="/assets/nav/<%= active?(params[:controller], 'admin', 'tb') %>" alt=""/>
 
               <p>Articles</p></a>
           </li>
           <li class="nav-item">
-            <a href="/admin/uploads/new"><img src="/assets/nav/<%= active?(params[:controller],'admin/uploads','gal') %>" alt=""/>
+            <a href="/admin/uploads/new"><img src="/assets/nav/<%= active?(params[:controller], 'admin/uploads', 'gal') %>" alt=""/>
 
               <p>Uploads</p></a>
           </li>
 
           <li class="nav-item">
-            <a href="/admin/sections/new"><img src="/assets/nav/<%= active?(params[:controller],'admin/sections','flm') %>" alt=""/>
+            <a href="/admin/sections/new"><img src="/assets/nav/<%= active?(params[:controller], 'admin/sections', 'flm') %>" alt=""/>
 
               <p>Sections</p></a>
           </li>
 
           <li class="nav-item">
-            <a href="/admin/snippets/new"><img src="/assets/nav/<%= active?(params[:controller],'admin/snippets','icn') %>" alt=""/>
+            <a href="/admin/snippets/new"><img src="/assets/nav/<%= active?(params[:controller], 'admin/snippets', 'icn') %>" alt=""/>
 
               <p>Snippets</p></a>
           </li>
 
           <li class="nav-item">
-                      <a href="/admin/users/show"><img src="/assets/nav/err.png" alt=""/>
+            <a href="/admin/users/show"><img src="/assets/nav/<%= active?(params[:controller], 'admin/users', 'err') %>" alt=""/>
 
-                        <p>Users</p></a>
-                    </li>
+              <p>Users</p></a>
+          </li>
 
           <li class="nav-item">
-            <a href="/admin/settings/new"><img src="/assets/nav/dash.png" alt=""/>
+            <a href="/admin/settings/new"><img src="/assets/nav/<%= active?(params[:controller], 'admin/settings', 'dash') %>" alt=""/>
 
               <p>Settings</p></a>
           </li>
 
+          <li class="nav-item">
+            <a href="/admin/extend/new"><img src="/assets/nav/<%= active?(params[:controller], 'admin/extend', 'grid') %>" alt=""/>
+
+              <p>Extend</p></a>
+          </li>
 
         </ul>
       </li>
