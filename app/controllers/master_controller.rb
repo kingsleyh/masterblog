@@ -7,7 +7,12 @@ class MasterController < ApplicationController
       render :text => "Nothing To See"
     else
       if params[:id].nil?
+        default_section = Setting.get('default_section')
+        if default_section.nil?
         render :text => ERB.new(Section.first.content).result(binding)
+        else
+          render :text => ERB.new(Section.find_by_slug(default_section).content).result(binding)
+        end
       else
         #begin
         section = Section.find(params[:id])

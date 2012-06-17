@@ -5,12 +5,16 @@ class Setting < ActiveRecord::Base
   validates :value, :presence => true
 
   def self.get(key)
-    Setting.find_by_key(key).value
+    setting = Setting.find_by_key(key)
+    setting.value unless setting.nil?
   end
 
   def self.get?(key)
-    key = Setting.find_by_key(key).value
-    key == "true"
+    setting = Setting.find_by_key(key)
+    if !setting.nil?
+      key = setting.value
+      key == "true"
+    end
   end
 
 end
