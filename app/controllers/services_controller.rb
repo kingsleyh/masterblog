@@ -101,10 +101,10 @@ class ServicesController < ApplicationController
           if auth
             #flash[:info] = 'You are already logged in via ' + @authhash[:provider].capitalize
             redirect_to admin_index_path
-          #else
-          #  current_user.services.create!(:provider => @authhash[:provider], :uid => @authhash[:uid], :uname => @authhash[:name], :uemail => @authhash[:email])
-          #  flash[:success] = 'Your ' + @authhash[:provider].capitalize + ' account has been added for signing in at this site.'
-          #  redirect_to admin_index_path
+            #else
+            #  current_user.services.create!(:provider => @authhash[:provider], :uid => @authhash[:uid], :uname => @authhash[:name], :uemail => @authhash[:email])
+            #  flash[:success] = 'Your ' + @authhash[:provider].capitalize + ' account has been added for signing in at this site.'
+            #  redirect_to admin_index_path
           end
         else
           if auth
@@ -116,13 +116,9 @@ class ServicesController < ApplicationController
             flash[:success] = 'Signed in successfully via ' + @authhash[:provider].to_s.capitalize + '.'
             redirect_to admin_index_path
           else
-            if User.all.empty?
-              # this is a new user; show signup; @authhash is available to the view and stored in the sesssion for creation of a new user
-              session[:authhash] = @authhash
-              render signup_services_path
-            else
-              redirect_to admin_signin_path
-            end
+            # this is a new user; show signup; @authhash is available to the view and stored in the sesssion for creation of a new user
+            session[:authhash] = @authhash
+            render signup_services_path
           end
         end
       else
